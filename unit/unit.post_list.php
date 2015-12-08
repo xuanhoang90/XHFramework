@@ -21,10 +21,10 @@
 			}
 			$output =<<<HERE
 			<form class="form-horizontal">
-				<div class="block-title row">
-					<label class="control-label col-md-3" for="sort_order">Kiểu bài viết: </label>
+				<div class="block-title row form-group">
+					<label class="control-label col-md-3" for="post_type">Kiểu bài viết: </label>
 					<div class="col-md-9">
-						<select name="sort_order" class="form-control sort_order">
+						<select name="post_type" class="form-control post_type">
 							<option value="newest">--Select--</option>
 							<option value="newest">Bài viết mới nhất</option>
 							<option value="cat_selected">Bài viết thuộc danh mục</option>
@@ -33,7 +33,14 @@
 						</select>
 					</div>
 				</div>
-				<div class="block-title row">
+				<div class="block-title row form-group">
+					<label class="control-label col-md-3" for="post_cat">Post category: </label>
+					<div class="col-md-9">
+						<p class="name-preview" class="category-name">Category name</p>
+						<a class="object-select" href="#" data-toggle="modal" data-target="#window-object-quickaccess"><i class="fa fa-chain"></i> Select category</a>
+					</div>
+				</div>
+				<div class="block-title row form-group">
 					<label class="control-label col-md-3" for="post_number">Số lượng: </label>
 					<div class="col-md-9">
 						<input type="number" class="form-control post-number" name="post_number" placeholder="Post number" value="{$DefaultData}" />

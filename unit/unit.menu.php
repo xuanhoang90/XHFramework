@@ -21,16 +21,13 @@
 			}
 			$output =<<<HERE
 			<form>
-				<textarea name="editor" id="editor" rows="10" cols="80">{$DefaultData}</textarea>
-				<script>
-					$(function(){
-						CKEDITOR.replace( 'editor' );
-						CKEDITOR.instances['editor'].on('change', function() {
-							$("#editor").html(CKEDITOR.instances['editor'].getData());
-						});
-						CKEDITOR.config.title = false;
-					})
-				</script>
+				<div class="block-title row form-group">
+					<label class="control-label col-md-3" for="menu_select">Select menu: </label>
+					<div class="col-md-9">
+						<p class="name-preview" class="menu-name">Menu name</p>
+						<a class="object-select" href="#">Select menu</a>
+					</div>
+				</div>
 			</form>
 HERE;
 			return $output;

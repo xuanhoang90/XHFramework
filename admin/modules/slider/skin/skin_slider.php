@@ -8,6 +8,149 @@
 		public function __construct(){
 			return true;
 		}
+		public function ListSlider(){
+			global $CMS, $DB;
+			$CMS->admin['system']->LoadLanguage('admin_slider');
+			$custom_style = <<<CSS
+			<!-- Theme style -->
+			<link href="{$CMS->admin['style_dir']}/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+			<!-- AdminLTE Skins. Choose a skin from the css/skins
+				 folder instead of downloading all of them to reduce the load. -->
+			<link href="{$CMS->admin['style_dir']}/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+			<link href="{$CMS->admin['style_dir']}/plugins/bootstrap-switch/bootstrap-toggle.min.css" rel="stylesheet" type="text/css" />
+CSS;
+			$plugin = <<<CSS
+			<!-- SlimScroll -->
+			<script src="{$CMS->admin['style_dir']}/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+			<!-- FastClick -->
+			<script src="{$CMS->admin['style_dir']}/plugins/fastclick/fastclick.min.js" type="text/javascript"></script>
+			<!-- AdminLTE App -->
+			<script src="{$CMS->admin['style_dir']}/dist/js/app.min.js" type="text/javascript"></script>
+			<script src="{$CMS->admin['style_dir']}/plugins/jQueryUI/jquery-ui.js" type="text/javascript"></script>
+			<script src="{$CMS->admin['style_dir']}/plugins/bootstrap-switch/bootstrap-toggle.min.js" type="text/javascript"></script>
+			<!-- AdminLTE for demo purposes -->
+			<!--<script src="{$CMS->admin['style_dir']}/dist/js/demo.js" type="text/javascript"></script>-->
+			<script src="{$CMS->admin['style_dir']}/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
+CSS;
+			$title = $CMS->vars['lang']['acp_main_page_title'];
+			$output = "";
+			$output .=<<<HERE
+				{$CMS->admin['skin_global']->header($title, $custom_style)}
+				<body class="skin-green fixed sidebar-mini">
+					<!-- Site wrapper -->
+					<div class="wrapper">
+						{$CMS->admin['skin_global']->top_bar()}
+						
+						{$CMS->admin['skin_global']->left_bar()}
+
+						{$this->ListAllSlider()}
+
+						{$CMS->admin['skin_global']->footer_nav()}
+
+						{$CMS->admin['skin_global']->control_nav()}
+					</div><!-- ./wrapper -->
+				</body>
+				{$CMS->admin['skin_global']->footer($plugin)}
+HERE;
+			return $output;
+		}
+		public function QuickAction(){
+			global $CMS, $DB;
+			$output = "";
+			$output =<<<HERE
+				<div class="quickaccess">
+					<a class="add action" href="{$CMS->vars['root_domain']}?site=admin&page=slider&action=add"><i class="fa fa-plus"></i></a>
+				</div>
+HERE;
+			return $output;
+		}
+		public function ListAllSlider(){
+			global $CMS, $DB;
+			$output = "";
+			$output =<<<HERE
+					<!-- Content Wrapper. Contains page content -->
+						<div class="content-wrapper">
+							<!-- Content Header (Page header) -->
+							<section class="content-header">
+								<h1>
+									{$CMS->vars['lang']['acp_main_master_title']}
+									<small>{$CMS->vars['lang']['acp_main_slider_viewlist']}</small>
+								</h1>
+								<ol class="breadcrumb">
+									<li><a href="#"><i class="fa fa-dashboard"></i> {$CMS->vars['lang']['acp_main_master_title']}</a></li>
+									<li class="active"><a href="#">{$CMS->vars['lang']['acp_main_slider_viewlist']}</a></li>
+								</ol>
+							</section>
+
+							<!-- Main content -->
+							<section class="content">
+								<div class="row">
+									<div class="col-xs-12 contain-change-tpl">
+									
+										<div class="box">
+											<div class="box-header with-border">
+												<h3 class="box-title">{$CMS->vars['lang']['acp_main_slider_viewlist']}</h3>
+											</div><!-- /.box-header -->
+											<div class="box-body">
+												<table class="table table-bordered">
+													<tbody>
+														<tr class="theader">
+															<th width="5%">ID</th>
+															<th>Slider</th>
+															<th width="20%">Action</th>
+															<th width="15%">Status</th>
+														</tr>
+HERE;
+													$SliderList = $this->GetSliderListData();
+													foreach($SliderList as $oneSlider){
+														//check status
+														if($oneSlider['status'] == "1"){
+															$checked = "checked";
+														}else{
+															$checked = "";
+														}
+														$output .=<<<HERE
+														<tr>
+															<td>{$oneSlider['id']}</td>
+															<td><p class="pagename"><i class='fa {$oneSlider['icon']}'></i> {$oneSlider['name']}</p></td>
+															<td>
+																<a class="act edit" target="_blank" href="{$CMS->vars['root_domain']}/?site=admin&page=edit_tpl&action=editmenu&id={$oneSlider['id']}"><i class='fa fa-edit'></i> Edit</a>
+																<a class="act edit" target="_blank" href="{$CMS->vars['root_domain']}/?site=admin&page=edit_tpl&action=deletemenu&id={$oneSlider['id']}"><i class='fa fa-trash'></i> Delete</a>
+															</td>
+															<td>
+																<input type="checkbox" {$checked} data-toggle="toggle" data-on="<i class='fa fa-eye'></i> Enable" data-off="<i class='fa fa-eye-slash'></i> Disable">
+															</td>
+														</tr>
+HERE;
+													}
+													if(!$SliderList){
+														$output .=<<<HERE
+														<tr>
+															<td colspan="5">Empty</td>
+														</tr>
+HERE;
+													}
+													$output .=<<<HERE
+													</tbody>
+												</table>
+											</div><!-- /.box-body -->
+											<!--<div class="box-footer clearfix">
+												<ul class="pagination pagination-sm no-margin pull-right">
+													<li><a href="#">«</a></li>
+													<li><a href="#">1</a></li>
+													<li><a href="#">»</a></li>
+												</ul>
+											</div>-->
+										</div><!-- /.box -->
+										
+									</div>
+								</div>
+							</section><!-- /.content -->
+						</div><!-- /.content-wrapper -->
+						{$this->QuickAction()}
+HERE;
+			return $output;
+		}
 		public function AddSlider(){
 			global $CMS, $DB;
 			$CMS->admin['system']->LoadLanguage('admin_slider');
@@ -751,5 +894,15 @@ HERE;
 				</div>
 HERE;
 			return $output;
+		}
+		public function GetSliderListData(){
+			global $CMS, $DB;
+			$DB->query("use ".WEBSITE_DBNAME);
+			$sql = $DB->query("SELECT * FROM slider WHERE lang_id='1' AND 1=1 ORDER BY id DESC");
+			if($data = $sql->fetchAll()){
+				return $data;
+			}else{
+				return false;
+			}
 		}
 	}

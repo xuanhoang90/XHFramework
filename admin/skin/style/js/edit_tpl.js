@@ -3,6 +3,7 @@ $(function(){
 	var _globSettingLayout = $("#settinglayout");
 	var _globAddRowLayout = $("#addrowlayout");
 	var _globContainChangeTpl = $(".contain-change-tpl");
+	var _globChangeMainRow = $("#MainRowChange");
 	//remove action main data
 	$(".mainrow").find(".config-lvl-1").find(".fa-close").remove();
 	$(".mainsubrow").find(".config-lvl-2").find(".fa-close").removeClass("fa-close").addClass("fa-edit");
@@ -64,6 +65,12 @@ $(function(){
 	var _ColSize4 = "<div class='col-layout size-4 has-child-level-3 col-xs-4' data='4'><div class='config config-lvl-3 col-md-12'><i class='fa fa-code'></i></div><div class='add add-lvl-3 col-xs-12'><i class='fa fa-plus'></i></div></div>";
 	var _ColSize3 = "<div class='col-layout size-3 has-child-level-3 col-xs-3' data='3'><div class='config config-lvl-3 col-md-12'><i class='fa fa-code'></i></div><div class='add add-lvl-3 col-xs-12'><i class='fa fa-plus'></i></div></div>";
 	
+	var _MainSize12 = "<div class='col-layout size-12 has-child-level-3 col-xs-12' data='12'><div class='config config-lvl-3 col-md-12'><i class='fa fa-code'></i></div><div class='block-layout col-xs-12 mainblock' data=''><div class='config config-lvl-4 col-md-12'><a class='block-title'>Required</a><i class='fa fa-wrench'></i><div class='block-content'></div></div><div class='add add-lvl-3 col-xs-12'><i class='fa fa-plus'></i></div></div></div>";
+	var _MainSize9 = "<div class='col-layout size-9 has-child-level-3 col-xs-9' data='9'><div class='config config-lvl-3 col-md-12'><i class='fa fa-code'></i></div><div class='block-layout col-xs-12 mainblock' data=''><div class='config config-lvl-4 col-md-12'><a class='block-title'>Required</a><i class='fa fa-wrench'></i><div class='block-content'></div></div><div class='add add-lvl-3 col-xs-12'><i class='fa fa-plus'></i></div></div></div>";
+	var _MainSize8 = "<div class='col-layout size-8 has-child-level-3 col-xs-8' data='8'><div class='config config-lvl-3 col-md-12'><i class='fa fa-code'></i></div><div class='block-layout col-xs-12 mainblock' data=''><div class='config config-lvl-4 col-md-12'><a class='block-title'>Required</a><i class='fa fa-wrench'></i><div class='block-content'></div></div><div class='add add-lvl-3 col-xs-12'><i class='fa fa-plus'></i></div></div></div>";
+	var _MainSize6 = "<div class='col-layout size-6 has-child-level-3 col-xs-6' data='6'><div class='config config-lvl-3 col-md-12'><i class='fa fa-code'></i></div><div class='block-layout col-xs-12 mainblock' data=''><div class='config config-lvl-4 col-md-12'><a class='block-title'>Required</a><i class='fa fa-wrench'></i><div class='block-content'></div></div><div class='add add-lvl-3 col-xs-12'><i class='fa fa-plus'></i></div></div></div>";
+	var _MainSize4 = "<div class='col-layout size-4 has-child-level-3 col-xs-4' data='4'><div class='config config-lvl-3 col-md-12'><i class='fa fa-code'></i></div><div class='block-layout col-xs-12 mainblock' data=''><div class='config config-lvl-4 col-md-12'><a class='block-title'>Required</a><i class='fa fa-wrench'></i><div class='block-content'></div></div><div class='add add-lvl-3 col-xs-12'><i class='fa fa-plus'></i></div></div></div>";
+	var _MainSize3 = "<div class='col-layout size-3 has-child-level-3 col-xs-3' data='3'><div class='config config-lvl-3 col-md-12'><i class='fa fa-code'></i></div><div class='block-layout col-xs-12 mainblock' data=''><div class='config config-lvl-4 col-md-12'><a class='block-title'>Required</a><i class='fa fa-wrench'></i><div class='block-content'></div></div><div class='add add-lvl-3 col-xs-12'><i class='fa fa-plus'></i></div></div></div>";
 	
 	
 	var _AddRow12 = function(){
@@ -742,5 +749,71 @@ $(function(){
 	$(document).on("click", ".mainsubrow .config-lvl-2 .fa-edit", function(e){
 		e.preventDefault();
 		$("#MainRowChange").fadeIn(100);
+	})
+	
+	//change main row
+	$(document).on("click", "#MainRowChange .row-layout", function(e){
+		e.preventDefault();
+		$("#MainRowChange .row-layout").removeClass("selected");
+		$(this).addClass("selected");
+	})
+	var _ChangeRow12 = function(){
+		var _RowData = _MainSize12;
+		_globContainChangeTpl.find(".mainsubrow").find(".config").after(_RowData);
+		_ResetSort();
+	}
+	var _ChangeRow93 = function(){
+		var _RowData = _MainSize9+_ColSize3;
+		_globContainChangeTpl.find(".mainsubrow").find(".config").after(_RowData);
+		_ResetSort();
+	}
+	var _ChangeRow363 = function(){
+		var _RowData = _ColSize3+_MainSize6+_ColSize3;
+		_globContainChangeTpl.find(".mainsubrow").find(".config").after(_RowData);
+		_ResetSort();
+	}
+	var _ChangeRow84 = function(){
+		var _RowData = _MainSize8+_ColSize4;
+		_globContainChangeTpl.find(".mainsubrow").find(".config").after(_RowData);
+		_ResetSort();
+	}
+	var _ChangeRow66 = function(){
+		var _RowData = _MainSize6+_ColSize6;
+		_globContainChangeTpl.find(".mainsubrow").find(".config").after(_RowData);
+		_ResetSort();
+	}
+	_globChangeMainRow.find(".apply-selected").click(function(){
+		_globChangeMainRow.fadeOut(300);
+		//get setting main block
+		var _MainSetting = $(".mainsubrow").find(".mainblock").attr("data");
+		//add row data.
+		$(".mainsubrow").find(".col-layout").remove();
+		if(_globChangeMainRow.find(".list-row").find(".selected").hasClass("data-12")){
+			_ChangeRow12();
+		}
+		if(_globChangeMainRow.find(".list-row").find(".selected").hasClass("data-9-3")){
+			_ChangeRow93();
+		}
+		if(_globChangeMainRow.find(".list-row").find(".selected").hasClass("data-3-6-3")){
+			_ChangeRow363();
+		}
+		if(_globChangeMainRow.find(".list-row").find(".selected").hasClass("data-8-4")){
+			_ChangeRow84();
+		}
+		if(_globChangeMainRow.find(".list-row").find(".selected").hasClass("data-6-6")){
+			_ChangeRow66();
+		}
+		$(".mainsubrow").find(".mainblock").attr({"data": _MainSetting});
+	})
+	
+	//radio button click
+	$(document).on("click", ".radio-button", function(e){
+		e.preventDefault();
+		$(this).find("input").prop("checked", true);
+	})
+	//image-select click
+	$(document).on("click", ".image-select", function(e){
+		e.preventDefault();
+		
 	})
 })

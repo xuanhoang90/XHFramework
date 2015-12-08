@@ -36,6 +36,8 @@
 		
 		'acp_menu_header_config_themes' => 'Giao diện',
 		'acp_menu_header_config_themes_changetpl' => 'Đổi gói giao diện',
+		'acp_menu_header_config_themes_change_header' => 'Thay đổi header',
+		'acp_menu_header_config_themes_change_footer' => 'Thay đổi footer',
 		'acp_menu_header_config_themes_custom' => 'Tùy chỉnh',
 		'acp_menu_header_config_module_manage' => 'Khối chức năng',
 		
@@ -44,7 +46,7 @@
 		'acp_menu_header_member_add' => 'Thêm',
 		'acp_menu_header_member_manage' => 'Quản lý',
 		
-		'acp_menu_header_customer' => 'Khách hàng',
+		'acp_menu_header_customer' => 'Người dùng',
 		
 		'acp_menu_media' => 'Thư viện',
 		'acp_menu_header_image' => 'Hình ảnh',

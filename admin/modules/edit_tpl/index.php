@@ -18,12 +18,6 @@
 					}
 					$this->ListTpl();
 					break;
-				case 'viewlist_menu':
-					$this->ListMenu();
-					break;
-				case 'editmenu':
-					$this->EditMainMenu();
-					break;
 				case 'ajax':
 					if($CMS->input['sub_act'] == "block_setting"){
 						$this->GetBlockSetting();
@@ -45,18 +39,6 @@
 			global $CMS, $DB;
 			$CMS->admin['system']->LoadSkinModule('edit_tpl');
 			echo $CMS->skin_edit_tpl->ListTpl();exit;
-			return;
-		}
-		public function ListMenu(){
-			global $CMS, $DB;
-			$CMS->admin['system']->LoadSkinModule('edit_tpl');
-			echo $CMS->skin_edit_tpl->ListMenu();exit;
-			return;
-		}
-		public function EditMainMenu(){
-			global $CMS, $DB;
-			$CMS->admin['system']->LoadSkinModule('edit_tpl');
-			echo $CMS->skin_edit_tpl->EditMainMenu();exit;
 			return;
 		}
 		public function PageDefault(){

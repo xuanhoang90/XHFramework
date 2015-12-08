@@ -181,7 +181,7 @@ HERE;
 				</form>
 				<!-- /.search form -->
 				<!-- sidebar menu: : style can be found in sidebar.less -->
-				<ul class="sidebar-menu" style="padding-bottom: 50px;">
+				<ul class="sidebar-menu x-sidebar-menu" style="padding-bottom: 50px;">
 				
 					
 HERE;
@@ -224,6 +224,26 @@ HERE;
 			</section>
 			<!-- /.sidebar -->
 		</aside>
+		<script>
+		$(function(){
+			var _cur_url = window.location.href;
+			//alert(_cur_urls);
+			$(".x-sidebar-menu").find("li").each(function(){
+				var _link = $(this).find("a").first().attr("href");
+				if(typeof _link === 'undefined'){
+					
+				}else{
+					var _compare = _cur_url.substring(0,_link.length);
+					if(_link == _compare){
+						$(this).addClass("active");
+						if(!$(this).hasClass("treeview")){
+							$(this).parent().parent().parent().addClass("active");
+						}
+					}
+				}
+			})
+		})
+		</script>
 HERE;
 			return $output;
 		}
@@ -548,13 +568,13 @@ HERE;
 														$(this).addClass("x-attachment-item-selected");
 													}
 												})
-												$(".x-attachment-select-multi").click(function(e){
+												$(document).on("click", ".x-attachment-select-multi", function(e){
 													e.preventDefault();
 													$("#w-attachment-list").addClass("multi-select");
 													$("#w-attachment-list").removeClass("one-select");
 													_AttachmentResetSelect();
 												})
-												$(".x-attachment-select-one").click(function(e){
+												$(document).on("click", ".x-attachment-select-one", function(e){
 													e.preventDefault();
 													$("#w-attachment-list").removeClass("multi-select");
 													$("#w-attachment-list").addClass("one-select");

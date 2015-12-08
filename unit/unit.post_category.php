@@ -21,16 +21,26 @@
 			}
 			$output =<<<HERE
 			<form>
-				<textarea name="editor" id="editor" rows="10" cols="80">{$DefaultData}</textarea>
-				<script>
-					$(function(){
-						CKEDITOR.replace( 'editor' );
-						CKEDITOR.instances['editor'].on('change', function() {
-							$("#editor").html(CKEDITOR.instances['editor'].getData());
-						});
-						CKEDITOR.config.title = false;
-					})
-				</script>
+				<div class="block-title row form-group">
+					<label class="control-label col-md-3" for="post_cat">Post category: </label>
+					<div class="col-md-9">
+						<p class="name-preview" class="category-name">Category name</p>
+						<a class="object-select" href="#" data-toggle="modal" data-target="#window-object-quickaccess"><i class="fa fa-chain"></i> Select category</a>
+					</div>
+				</div>
+				<div class="block-title row form-group">
+					<label class="control-label col-md-3" for="post_show_sub_object">Show sub object: </label>
+					<div class="col-md-9">
+						<p class="radio-button"><input class="post_show_sub_object" name="post_show_sub_object" checked="true" type="radio" value="yes"> List post</p>
+						<p class="radio-button"><input class="post_show_sub_object" name="post_show_sub_object" type="radio" value="no"> List sub category</p>
+					</div>
+				</div>
+				<div class="block-title row form-group">
+					<label class="control-label col-md-3" for="number_of_post">Number of posts: </label>
+					<div class="col-md-9">
+						<input type="number" class="form-control number_of_post" name="number_of_post" placeholder="Number of posts" value="10" />
+					</div>
+				</div>
 			</form>
 HERE;
 			return $output;

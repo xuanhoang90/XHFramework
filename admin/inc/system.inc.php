@@ -38,6 +38,7 @@
 			)
 		),
 		//header product
+		/*
 		array(
 			'root' => array(
 				'icon' => '',
@@ -115,7 +116,7 @@
 					'lang' => 'acp_menu_item_productcat_list',
 				)
 			)
-		),
+		), */
 		//header post
 		array(
 			'root' => array(
@@ -192,25 +193,25 @@
 				//system setting
 				array(
 					'icon' => 'fa-wrench',
-					'link' => '?site=admin&page=config',
+					'link' => '?site=admin&page=config&action=general_config',
 					'lang' => 'acp_menu_header_system_config_setting',
 				),
 				//change info
 				array(
 					'icon' => 'fa-eraser',
-					'link' => '?site=admin&page=info',
+					'link' => '?site=admin&page=config&action=info',
 					'lang' => 'acp_menu_header_system_config_changeinfo',
 				),
 				//language
 				array(
 					'icon' => 'fa-globe',
-					'link' => '?site=admin&page=language',
+					'link' => '?site=admin&page=config&action=language',
 					'lang' => 'acp_menu_header_system_config_language',
 				),
 				//currency
 				array(
 					'icon' => 'fa-dollar',
-					'link' => '?site=admin&page=currency',
+					'link' => '?site=admin&page=config&action=currency',
 					'lang' => 'acp_menu_header_system_config_currentcy',
 				),
 			)
@@ -236,12 +237,20 @@
 					'link' => '?site=admin&page=edit_tpl&action=viewlist',
 					'lang' => 'acp_menu_header_config_themes_custom',
 				),
-				//main menu
+				//change template
+				/*
 				array(
-					'icon' => 'fa-reorder',
-					'link' => '?site=admin&page=edit_tpl&action=editmenu',
-					'lang' => 'acp_menu_header_config_mainmenu',
-				)
+					'icon' => 'fa-cogs',
+					'link' => '?site=admin&page=change_tpl&action=change_header',
+					'lang' => 'acp_menu_header_config_themes_change_header',
+				),
+				//theme customize
+				array(
+					'icon' => 'fa-cogs',
+					'link' => '?site=admin&page=edit_tpl&action=change_footer',
+					'lang' => 'acp_menu_header_config_themes_change_footer',
+				),
+				*/
 			)
 		),
 		//menu
@@ -256,13 +265,13 @@
 				//upload image
 				array(
 					'icon' => 'fa-edit',
-					'link' => '?site=admin&page=edit_tpl&action=editmenu',
+					'link' => '?site=admin&page=menu&action=editmenu',
 					'lang' => 'acp_menu_header_config_mainmenu',
 				),
 				//image manage
 				array(
 					'icon' => 'fa-list-ul',
-					'link' => '?site=admin&page=edit_tpl&action=viewlist_menu',
+					'link' => '?site=admin&page=menu&action=viewlist_menu',
 					'lang' => 'acp_menu_header_config_mainmenu_list',
 				)
 			)
@@ -341,6 +350,7 @@
 			)
 		),
 		//header media
+		/*
 		array(
 			'root' => array(
 				'icon' => '',
@@ -417,7 +427,7 @@
 					'lang' => 'acp_menu_header_video_manage',
 				)
 			)
-		),
+		),*/
 	);
 	class Admin{
 		public function __construct(){

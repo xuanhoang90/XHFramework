@@ -775,3 +775,79 @@
 #MainRowChange .contain .body .list-row .selected:hover .col-layout{
 	background: #777;
 }
+/*Block setting*/
+.name-preview{
+	display: block;
+	margin: 5px 0px;
+	background: #99ffcc;
+	padding: 5px;
+	line-height: 30px;
+	font-size: 15px;
+	font-weight: bold;
+}
+.image-preview{
+	display: block;
+	margin: 5px 0px;
+	background: #99ffcc;
+	padding: 5px;
+	line-height: 30px;
+	font-size: 15px;
+	font-weight: bold;
+}
+.image-select{
+	margin: 5px 0px;
+	padding: 5px 15px;
+	line-height: 20px;
+	font-size: 15px;
+	font-weight: bold;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	background: green;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+	clear: both;
+	float: left;
+}
+.object-select{
+	margin: 5px 0px;
+	padding: 5px 15px;
+	line-height: 20px;
+	font-size: 15px;
+	font-weight: bold;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	background: green;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+	clear: both;
+	float: left;
+}
+.radio-button{
+	margin: 5px 0px;
+	padding: 5px 15px;
+	line-height: 20px;
+	font-size: 15px;
+	font-weight: bold;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	background: green;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+	clear: both;
+	float: left;
+}
+.radio-button:hover, .image-select:hover, .object-select:hover{
+	background: darkgreen;
+}
+.radio-button input{
+	line-height: 20px;
+}

@@ -21,16 +21,19 @@
 			}
 			$output =<<<HERE
 			<form>
-				<textarea name="editor" id="editor" rows="10" cols="80">{$DefaultData}</textarea>
-				<script>
-					$(function(){
-						CKEDITOR.replace( 'editor' );
-						CKEDITOR.instances['editor'].on('change', function() {
-							$("#editor").html(CKEDITOR.instances['editor'].getData());
-						});
-						CKEDITOR.config.title = false;
-					})
-				</script>
+				<div class="block-title row form-group">
+					<label class="control-label col-md-3" for="number_of_cmt">Number display: </label>
+					<div class="col-md-9">
+						<input type="number" class="form-control number_of_cmt" name="number_of_cmt" placeholder="Number of comments" value="10" />
+					</div>
+				</div>
+				<div class="block-title row form-group">
+					<label class="control-label col-md-3" for="show_text_area">Show text area: </label>
+					<div class="col-md-9">
+						<p class="radio-button"><input class="show-text-area" name="show_text_area" checked="true" type="radio" value="yes"> Yes</p>
+						<p class="radio-button"><input class="show-text-area" name="show_text_area" type="radio" value="no"> No</p>
+					</div>
+				</div>
 			</form>
 HERE;
 			return $output;

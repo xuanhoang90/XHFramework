@@ -21,10 +21,18 @@
 			}
 			$output =<<<HERE
 			<form class="form-horizontal">
-				<div class="block-title row">
-					<label class="control-label col-md-3" for="block_title">Logo Link: </label>
+				<div class="block-title row form-group">
+					<label class="control-label col-md-3" for="image">Image: </label>
 					<div class="col-md-9">
-						<input type="text" class="form-control logo-link" name="logo_link" placeholder="Logo link" value="{$DefaultData}" />
+						<img class="image-preview" src="" alt="Banner background"/>
+						<a class="image-select x-attachment-select-one" href="#" data-toggle="modal" data-target="#window-attachment-quickaccess"><i class="fa fa-photo"></i> Select image</a>
+					</div>
+				</div>
+				<div class="block-title row form-group">
+					<label class="control-label col-md-3" for="logo_link">Link: </label>
+					<div class="col-md-9">
+						<input type="text" class="form-control logo_link" name="logo_link" placeholder="Logo link" value="{$DefaultData}" />
+						<a class="object-select" href="#">Select from object</a>
 					</div>
 				</div>
 			</form>

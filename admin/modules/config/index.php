@@ -12,19 +12,46 @@
 		public function Autorun(){
 			global $CMS, $DB;
 			switch($CMS->input['action']){
-				case 'page_default':
-					$this->PageDefault();
+				case 'general_config':
+					$this->GeneralConfig();
+					break;
+				case 'info':
+					$this->InfoConfig();
+					break;
+				case 'language':
+					$this->LanguageConfig();
+					break;
+				case 'currency':
+					$this->CurrencyConfig();
 					break;
 				default:
-					$this->PageDefault();
+					$this->GeneralConfig();
 					break;
 			}
 			return true;
 		}
-		public function PageDefault(){
+		public function GeneralConfig(){
 			global $CMS, $DB;
 			$CMS->admin['system']->LoadSkinModule('config');
-			echo $CMS->skin_config->PageDefault();exit;
+			echo $CMS->skin_config->GeneralConfig();exit;
+			return;
+		}
+		public function InfoConfig(){
+			global $CMS, $DB;
+			$CMS->admin['system']->LoadSkinModule('config');
+			echo $CMS->skin_config->InfoConfig();exit;
+			return;
+		}
+		public function LanguageConfig(){
+			global $CMS, $DB;
+			$CMS->admin['system']->LoadSkinModule('config');
+			echo $CMS->skin_config->LanguageConfig();exit;
+			return;
+		}
+		public function CurrencyConfig(){
+			global $CMS, $DB;
+			$CMS->admin['system']->LoadSkinModule('config');
+			echo $CMS->skin_config->CurrencyConfig();exit;
 			return;
 		}
 	}

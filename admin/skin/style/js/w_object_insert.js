@@ -161,7 +161,21 @@ $(function(){
 			_globWindowObjectQuickAccess.find(".contain-xw-object-list").find(".ajax-fake-loading").hide();
 		}
 	})
-	
+	//block config - select object link
+	$(document).on("click", ".object-select", function(e){
+		e.preventDefault();
+		var _globWindowObjectQuickAccess = $("#window-object-quickaccess");
+		_globWindowObjectQuickAccess.removeClass("w-object-select-multi");
+		_globWindowObjectQuickAccess.removeClass("w-object-select-one");
+		_globWindowObjectQuickAccess.addClass("w-object-select-one");
+		_globWindowObjectQuickAccess.attr({"data-type": "all"});
+		_globWindowObjectQuickAccess.find(".contain-xw-object-list").find(".ajax-fake-loading").show();
+		_globMenuItemChange.removeClass("x-menu-item-change-this");
+		$(this).parent().parent().addClass("x-menu-item-change-this");
+		_globWindowObjectQuickAccess.find(".x-custom-action").removeClass("can-add-direct");
+		_globWindowObjectQuickAccess.find(".x-custom-action").addClass("can-add-direct");
+		_ReloadWindowObject();
+	})
 	//set object type and allow select val
 	$(document).on("click", ".menu-item-post .x-object-select-one", function(e){
 		e.preventDefault();

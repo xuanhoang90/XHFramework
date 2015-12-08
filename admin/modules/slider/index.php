@@ -15,8 +15,11 @@
 				case 'add':
 					$this->AddSlider();
 					break;
+				case 'viewlist':
+					$this->ListSlider();
+					break;
 				default:
-					$this->AddSlider();
+					$this->ListSlider();
 					break;
 			}
 			return true;
@@ -25,6 +28,12 @@
 			global $CMS, $DB;
 			$CMS->admin['system']->LoadSkinModule('slider');
 			echo $CMS->skin_slider->AddSlider();exit;
+			return;
+		}
+		public function ListSlider(){
+			global $CMS, $DB;
+			$CMS->admin['system']->LoadSkinModule('slider');
+			echo $CMS->skin_slider->ListSlider();exit;
 			return;
 		}
 		public function PageDefault(){
