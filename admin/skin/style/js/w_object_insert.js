@@ -164,11 +164,12 @@ $(function(){
 	//block config - select object link
 	$(document).on("click", ".object-select", function(e){
 		e.preventDefault();
+		var _DataType = $(this).attr("data");
 		var _globWindowObjectQuickAccess = $("#window-object-quickaccess");
 		_globWindowObjectQuickAccess.removeClass("w-object-select-multi");
 		_globWindowObjectQuickAccess.removeClass("w-object-select-one");
 		_globWindowObjectQuickAccess.addClass("w-object-select-one");
-		_globWindowObjectQuickAccess.attr({"data-type": "all"});
+		_globWindowObjectQuickAccess.attr({"data-type": _DataType});
 		_globWindowObjectQuickAccess.find(".contain-xw-object-list").find(".ajax-fake-loading").show();
 		_globMenuItemChange.removeClass("x-menu-item-change-this");
 		$(this).parent().parent().addClass("x-menu-item-change-this");

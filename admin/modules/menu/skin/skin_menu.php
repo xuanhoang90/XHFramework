@@ -67,6 +67,8 @@ HERE;
 			<link href="{$CMS->admin['style_dir']}/main_menu.css" rel="stylesheet" type="text/css" />
 			<link href="{$CMS->admin['style_dir']}/checkbox.css" rel="stylesheet" type="text/css" />
 			<link href="{$CMS->admin['style_dir']}/w_object_insert.css" rel="stylesheet" type="text/css" />
+			<link href="{$CMS->admin['style_dir']}/plugins/fileupload/css/jquery.filer.css" type="text/css" rel="stylesheet" />
+			<link href="{$CMS->admin['style_dir']}/plugins/fileupload/css/themes/jquery.filer-dragdropbox-theme.css" type="text/css" rel="stylesheet" />
 CSS;
 			$plugin = <<<CSS
 			<!-- SlimScroll -->
@@ -80,6 +82,8 @@ CSS;
 			<script src="{$CMS->admin['style_dir']}/js/main_menu.js" type="text/javascript"></script>
 			<script src="{$CMS->admin['style_dir']}/js/jquery.nicescroll.js" type="text/javascript"></script>
 			<script src="{$CMS->admin['style_dir']}/js/w_object_insert.js" type="text/javascript"></script>
+			<script src="{$CMS->admin['style_dir']}/plugins/fileupload/js/jquery.filer.min.js" type="text/javascript" ></script>
+			<script src="{$CMS->admin['style_dir']}/plugins/fileupload/js/setup.js" type="text/javascript" ></script>
 			<!-- AdminLTE for demo purposes -->
 			<!--<script src="{$CMS->admin['style_dir']}/dist/js/demo.js" type="text/javascript"></script>-->
 			<script src="{$CMS->admin['style_dir']}/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
@@ -105,6 +109,7 @@ CSS;
 					{$this->WindowAddItemMega()}
 					{$this->WindowSelectItemType()}
 					{$CMS->admin['skin_global']->ObjectInsert()}
+					{$CMS->admin['skin_global']->AttachmentImage()}
 				</body>
 				{$CMS->admin['skin_global']->footer($plugin)}
 HERE;
@@ -112,7 +117,13 @@ HERE;
 		}
 		public function LoadMainMenu(){
 			global $CMS, $DB;
-			//$PageData = $this->LoadPageData($id);
+			$menuName = "";
+			if(intval($CMS->input['id'])){
+				$menu_id = $CMS->input['id'];
+				$menuName = $this->LoadMenuName($menu_id);
+			}else{
+				$menu_id = false;
+			}
 			$output = "";
 			$output =<<<HERE
 					<!-- Content Wrapper. Contains page content -->
@@ -134,18 +145,19 @@ HERE;
 								<div class="row">
 									<div class="col-xs-12 col-md-8 contain-edit-mainmenu">
 										<div class="menu-name-contain">
-											<p class="label">Menu name: </p><input class="input-name" placeholder="Menu name" name="menu_name" value="" /><p class="label"><i class="fa fa-edit"></i></p>
+											<p class="label">Menu name: </p><input class="input-name x-master-name-input" placeholder="Menu name" name="menu_name" value="{$menuName}" /><p class="label"><i class="fa fa-edit"></i></p>
 										</div>
 										<div class="sortable sortable-edit-menu">
+											{$this->AppendMenuData($menu_id)}
 											<span class="add-item-master disabled"><i class="fa fa-plus fa-2x"></i></span>
 										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="custom-menu-btn-act">
-										<a class="imp-act save"><i class="fa fa-check"></i>Save</a>
+										<a class="imp-act save" href="{$CMS->vars['root_domain']}?site=admin&page=menu&action=savemenu&id={$menu_id}"><i class="fa fa-check"></i>Save</a>
 										<a class="imp-act preview"><i class="fa fa-eye"></i>Preview</a>
-										<a class="imp-act backtohome"><i class="fa fa-arrow-circle-o-left"></i>Back to home</a>
+										<a class="imp-act backtohome" href="{$CMS->vars['root_domain']}/taka_acp"><i class="fa fa-arrow-circle-o-left"></i>Back to home</a>
 									</div>
 								</div>
 							</section><!-- /.content -->
@@ -153,12 +165,94 @@ HERE;
 HERE;
 			return $output;
 		}
+		public function AppendSubMenuHTML($data){
+			global $CMS, $DB;
+			$output = "";
+			$submenuType = $data['menutype'];
+			$subItemList = $data['data'];
+			$output.=<<<HERE
+			<div class="submenu {$submenuType}">
+HERE;
+			foreach($subItemList as $item){
+				$itemType = $item['type'];
+				$itemData = $item['data'];
+				$label = $itemData['name'];
+				$image = $itemData['image'];
+				$jsonData = json_encode($itemData);
+				$output.=<<<HERE
+				<div class="menu-item item-slaver {$itemType} xexpand" data='{$jsonData}'>
+					<div class="quick-act">
+						<i class="fa fa-close"></i>
+						<i class="fa fa-cog"></i>
+						<i class="fa fa-compress"></i>
+					</div>
+					<div class="item-data">
+						<div class="icon-or-thumb">
+							<img class="thumbnail" src="{$image}">
+						</div>
+						<div class="menu-label">
+							<p>{$label}</p>
+						</div>
+					</div>
+					{$this->AppendSubMenuHTML($item['sub_data'])}
+					<span class="add-item-slaver disabled"><i class="fa fa-plus"></i></span>
+				</div>
+HERE;
+			}
+			$output.=<<<HERE
+			</div>
+HERE;
+			return $output;
+		}
+		public function AppendMenuData($menu_id){
+			global $CMS, $DB;
+			$output = "";
+			if($menu_id){
+				$DB->query("use ".WEBSITE_DBNAME);
+				$sql = $DB->query("SELECT * FROM menu WHERE id='{$menu_id}'");
+				if($data = $sql->fetchAll()){
+					$MenuData = unserialize($data[0]['data']);
+					//append master item
+					foreach($MenuData as $item){
+						//item master 
+						$itemData = $item['data'];
+						$label = $itemData['name'];
+						$image = $itemData['image'];
+						$jsonData = json_encode($itemData);
+						$output.=<<<HERE
+						<div class="menu-item item-master xexpand" data='{$jsonData}'>
+							<div class="quick-act">
+								<i class="fa fa-close"></i>
+								<i class="fa fa-cog"></i>
+								<i class="fa fa-compress"></i>
+							</div>
+							<div class="item-data">
+								<div class="icon-or-thumb">
+									<img class="thumbnail" src="{$image}">
+								</div>
+								<div class="menu-label">
+									<p>{$label}</p>
+								</div>
+							</div>
+							{$this->AppendSubMenuHTML($item['sub_data'])}
+							<span class="add-item-slaver disabled"><i class="fa fa-plus"></i></span>
+						</div>
+HERE;
+					}
+					return $output;
+				}else{
+					return $output;
+				}
+			}else{
+				return $output;
+			}
+		}
 		public function QuickAction(){
 			global $CMS, $DB;
 			$output = "";
 			$output =<<<HERE
 				<div class="quickaccess">
-					<a class="add action" href="{$CMS->vars['root_domain']}?site=admin&page=edit_tpl&action=editmenu"><i class="fa fa-plus"></i></a>
+					<a class="add action" href="{$CMS->vars['root_domain']}?site=admin&page=menu&action=editmenu"><i class="fa fa-plus"></i></a>
 				</div>
 HERE;
 			return $output;
@@ -213,8 +307,8 @@ HERE;
 															<td>{$oneMenu['id']}</td>
 															<td><p class="pagename"><i class='fa {$oneMenu['icon']}'></i> {$oneMenu['name']}</p></td>
 															<td>
-																<a class="act edit" target="_blank" href="{$CMS->vars['root_domain']}/?site=admin&page=edit_tpl&action=editmenu&id={$oneMenu['id']}"><i class='fa fa-edit'></i> Edit</a>
-																<a class="act edit" target="_blank" href="{$CMS->vars['root_domain']}/?site=admin&page=edit_tpl&action=deletemenu&id={$oneMenu['id']}"><i class='fa fa-trash'></i> Delete</a>
+																<a class="act edit" target="_blank" href="{$CMS->vars['root_domain']}/?site=admin&page=menu&action=editmenu&id={$oneMenu['id']}"><i class='fa fa-edit'></i> Edit</a>
+																<a class="act edit" target="_blank" href="{$CMS->vars['root_domain']}/?site=admin&page=menu&action=deletemenu&id={$oneMenu['id']}"><i class='fa fa-trash'></i> Delete</a>
 															</td>
 															<td>
 																<input type="checkbox" {$checked} data-toggle="toggle" data-on="<i class='fa fa-eye'></i> Enable" data-off="<i class='fa fa-eye-slash'></i> Disable">
@@ -316,23 +410,23 @@ HERE;
 								<div class="body">
 									<div class="row setting-frame">
 										<div class="primary row-data form-horizontal">
-											<div class="setting-init menu-item-link-input">
+											<div class="setting-init menu-item-link-input menu-item-object-can-edit">
 												<div class="tab-master">
 													<div class='checkbox checkbox-info checkbox-circle'>
 														<input type="checkbox" checked="" id="checkbox_link_input" name="item_type" class="item-type-selection"><label for="checkbox_link_input"> Link normal</label>
 													</div>
 												</div>
-												<div class="tab-slaver">
-													<div class="form-group">
-														<label class="control-label col-md-4" for="menu_label">Label: </label>
-														<div class="col-md-8">
-															<input class="name form-control" type="text" name="menu_label">
-														</div>
+												<div class="tab-slaver row">
+													<div class="col-md-2">
+														<img src="{$CMS->vars['root_domain']}/admin/skin/style/images/default_image.png" class="thumb" />
+														<a class="btn btn-primary x-attachment-select-one" style="margin-top: 5px;" data-toggle="modal" data-target="#window-attachment-quickaccess"> Change image</a>
 													</div>
-													<div class="form-group">
-														<label class="control-label col-md-4" for="menu_link">Link: </label>
-														<div class="col-md-8">
-															<input class="link form-control" type="text" name="menu_link">
+													<div class="col-md-8">
+														<div class="form-group">
+															<input class="name form-control" type="text" name="menu_object_name" placeholder="Object name">
+														</div>
+														<div class="form-group">
+															<input class="link form-control" type="text" name="menu_object_link" placeholder="{$CMS->vars['root_domain']}/object link">
 														</div>
 													</div>
 												</div>
@@ -527,9 +621,9 @@ HERE;
 										<div class="target-item-normal">
 											<p><i class="fa fa-th-list"></i> Item normal</p>
 										</div>
-										<div class="target-item-mega">
+										<!--<div class="target-item-mega">
 											<p><i class="fa fa-th-large"></i> Item mega</p>
-										</div>
+										</div>-->
 									</div>
 								</div>
 								<div class="footer">
@@ -549,6 +643,16 @@ HERE;
 			$sql = $DB->query("SELECT * FROM menu WHERE lang_id='1' AND 1=1 ORDER BY id DESC");
 			if($data = $sql->fetchAll()){
 				return $data;
+			}else{
+				return false;
+			}
+		}
+		public function LoadMenuName($id){
+			global $CMS, $DB;
+			$DB->query("use ".WEBSITE_DBNAME);
+			$sql = $DB->query("SELECT * FROM menu WHERE id='{$id}'");
+			if($data = $sql->fetchAll()){
+				return $data[0]['name'];
 			}else{
 				return false;
 			}

@@ -38,6 +38,31 @@
 				return false;
 			}
 		}
+		public function LoadListAttachmentDataSize($type = false, $limit = 1000000){
+			global $CMS, $DB;
+			switch($type){
+				case 'image':
+					$type = "1";
+					break;
+				case 'video':
+					$type = "2";
+					break;
+				default:
+					$type = false;
+					break;
+			}
+			if($type){
+				$DB->query("use ".WEBSITE_DBNAME);
+				$sql = $DB->query("SELECT sum(status) FROM media WHERE type='{$type}'");
+				if($data = $sql->fetchAll()){
+					return $data[0]['sum(status)'];
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}
 		public function SizeCounter(){
 			global $CMS, $DB;
 			$DB->query("use ".WEBSITE_DBNAME);

@@ -250,6 +250,8 @@ HERE;
 						{$this->WindowMainRowChange()}
 						{$CMS->admin['skin_global']->AttachmentImage()}
 						{$CMS->admin['skin_global']->ObjectInsert()}
+						{$CMS->admin['skin_global']->MenuSelect()}
+						{$CMS->admin['skin_global']->SliderSelect()}
 HERE;
 			return $output;
 		}

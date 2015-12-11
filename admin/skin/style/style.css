@@ -166,7 +166,7 @@
 .x-attachment-item-selected span{
 	display: block;
 }
-.w-attachment-im-show, .w-attachment-im-show{
+.w-attachment-im-show{
 	min-height: 300px;
 	max-height: 400px;
 	overflow: auto;
@@ -197,6 +197,152 @@
 	left: 10px;
 }
 .w-attachment-im-show .ajax-fake-loading .loading p{
+	line-height: 20px;
+	font-size: 15px;
+	color: green;
+}
+/*--*/
+.w-menu-im-show{
+	margin: 10px auto;
+	border: 1px solid #d4d4d4;
+	padding: 15px;
+}
+.x-menu-item{position: relative; border: 2px solid #d4d4d4;}
+.x-menu-item:hover img{
+	opacity: 0.8;
+}
+.x-menu-item span{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0;
+	right: 0;
+	background: rgba(255,255,255,.5);
+	z-index: 999;
+	display: none;
+}
+.x-menu-item span i{
+	display: block;
+	margin: 30px auto;
+	line-height: 30px;
+	font-size: 30px;
+	width: 30px; text-align: center;
+	color: green;
+	padding: 0;
+}
+.x-menu-item-selected{
+	border: 2px solid green;
+}
+.x-menu-item-selected:hover{
+	border: 2px solid green;
+}
+.x-menu-item-selected span{
+	display: block;
+}
+.w-menu-im-show{
+	min-height: 300px;
+	max-height: 400px;
+	overflow: auto;
+}
+.x-menu-ajax-load-page.disable, .x-menu-ajax-load-page.disable:hover{
+	opacity: 0.5;
+	background: white;
+	color: #333;
+	cursor: default;
+}
+.x-menu-ajax-load-page.active, .x-menu-ajax-load-page.active:hover{
+	background: #333; color: white;
+}
+.w-menu-im-show{position: relative; }
+.w-menu-im-show .ajax-fake-loading{
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: rgba(255,255,255,.5);
+	z-index: 9999;
+	display: none;
+}
+.w-menu-im-show .ajax-fake-loading .loading{
+	position: absolute;
+	bottom: 5px;
+	left: 10px;
+}
+.w-menu-im-show .ajax-fake-loading .loading p{
+	line-height: 20px;
+	font-size: 15px;
+	color: green;
+}
+/*--*/
+.w-slider-im-show{
+	margin: 10px auto;
+	border: 1px solid #d4d4d4;
+	padding: 15px;
+}
+.x-slider-item{position: relative; border: 2px solid #d4d4d4;}
+.x-slider-item:hover img{
+	opacity: 0.8;
+}
+.x-slider-item span{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0;
+	right: 0;
+	background: rgba(255,255,255,.5);
+	z-index: 999;
+	display: none;
+}
+.x-slider-item span i{
+	display: block;
+	margin: 30px auto;
+	line-height: 30px;
+	font-size: 30px;
+	width: 30px; text-align: center;
+	color: green;
+	padding: 0;
+}
+.x-slider-item-selected{
+	border: 2px solid green;
+}
+.x-slider-item-selected:hover{
+	border: 2px solid green;
+}
+.x-slider-item-selected span{
+	display: block;
+}
+.w-slider-im-show{
+	min-height: 300px;
+	max-height: 400px;
+	overflow: auto;
+}
+.x-slider-ajax-load-page.disable, .x-slider-ajax-load-page.disable:hover{
+	opacity: 0.5;
+	background: white;
+	color: #333;
+	cursor: default;
+}
+.x-slider-ajax-load-page.active, .x-slider-ajax-load-page.active:hover{
+	background: #333; color: white;
+}
+.w-slider-im-show{position: relative; }
+.w-slider-im-show .ajax-fake-loading{
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: rgba(255,255,255,.5);
+	z-index: 9999;
+	display: none;
+}
+.w-slider-im-show .ajax-fake-loading .loading{
+	position: absolute;
+	bottom: 5px;
+	left: 10px;
+}
+.w-slider-im-show .ajax-fake-loading .loading p{
 	line-height: 20px;
 	font-size: 15px;
 	color: green;

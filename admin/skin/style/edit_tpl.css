@@ -793,6 +793,7 @@
 	line-height: 30px;
 	font-size: 15px;
 	font-weight: bold;
+	max-width: 100%;
 }
 .image-select{
 	margin: 5px 0px;
@@ -849,5 +850,25 @@
 	background: darkgreen;
 }
 .radio-button input{
-	line-height: 20px;
+	float: left;
+	margin: 3px;
+}
+
+.menu-slider-name-select{
+	display: block;
+	margin: 5px;
+	line-height: 30px;
+	font-size: 15px;
+	color: #555;
+	font-weight: bold;
+	padding: 5px 10px;
+	cursor: pointer;
+	background: #e5f2ff;
+}
+.menu-slider-name-select:hover{
+	background: #ccffff;
+}
+.menu-slider-name-select.selected{
+	color: green;
+	background: #ccffff;
 }

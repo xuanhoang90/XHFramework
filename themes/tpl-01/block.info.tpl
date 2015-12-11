@@ -1,12 +1,17 @@
 <div class="tpl-block-main-info">
-	<h2 class="title">XHFramework Info</h2>
+	<h2 class="title">{$pagename}</h2>
 	<div class="context">
-		<p>Written by: Xuan Hoang</p>
-		<p>Company: TAKA</p>
-		<p>Version: 1.0</p>
-		<p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-		Nulla placerat eros eu orci mattis, eget dictum quam sodales. 
-		Cras aliquam magna metus, et blandit ligula ultrices in. 
-		Aenean vestibulum libero at fermentum pulvinar.</p>
+		{if $show_company == "yes"}
+			<p>Copyright {$company} @ 2015 powered by XHFramework</p>
+		{/if}
+		{if $show_email == "yes"}
+			<p>Email: <a href="mailto:{$email}">{$email}</a></p>
+		{/if}
+		{if $show_phone == "yes"}
+			<p>Hotline: {$phone}</p>
+		{/if}
+		{if $show_blog == "yes"}
+			<p>Blog: <a href="{$blog}">{$blog}</a></p>
+		{/if}
 	</div>
 </div>

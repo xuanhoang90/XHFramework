@@ -12,27 +12,35 @@
 				$DefaultData = $data;
 				foreach($DefaultData as $tmp){
 					if($tmp['name'] == "logo_link"){
-						$tmp2 = $tmp['value'];
+						if($tmp['value'] != ""){
+							$logo_link = $tmp['value'];
+						}
+					}
+					if($tmp['name'] == "banner_image"){
+						if($tmp['value'] != ""){
+							$banner_image = $tmp['value'];
+						}
 					}
 				}
-				$DefaultData = $tmp2;
 			}else{
-				$DefaultData = "";
+				$banner_image = "";
+				$logo_link = "";
 			}
 			$output =<<<HERE
 			<form class="form-horizontal">
 				<div class="block-title row form-group">
 					<label class="control-label col-md-3" for="image">Image: </label>
 					<div class="col-md-9">
-						<img class="image-preview" src="" alt="Banner background"/>
+						<input type="hidden" class="image-src" name="banner_image" value="{$banner_image}" />
+						<img class="image-preview" src="{$banner_image}" alt="Banner background"/>
 						<a class="image-select x-attachment-select-one" href="#" data-toggle="modal" data-target="#window-attachment-quickaccess"><i class="fa fa-photo"></i> Select image</a>
 					</div>
 				</div>
 				<div class="block-title row form-group">
 					<label class="control-label col-md-3" for="logo_link">Link: </label>
 					<div class="col-md-9">
-						<input type="text" class="form-control logo_link" name="logo_link" placeholder="Logo link" value="{$DefaultData}" />
-						<a class="object-select" href="#">Select from object</a>
+						<input type="text" class="form-control logo_link link-preview" name="logo_link" placeholder="Logo link" value="{$logo_link}" />
+						<a class="object-select" data="all" href="#" data-toggle="modal" data-target="#window-object-quickaccess"><i class="fa fa-chain"></i> Select from object</a>
 					</div>
 				</div>
 			</form>
@@ -47,15 +55,23 @@ HERE;
 					$DefaultData = $Data['moduleData'];
 					foreach($DefaultData as $tmp){
 						if($tmp['name'] == "logo_link"){
-							$tmp2 = $tmp['value'];
+							if($tmp['value'] != ""){
+								$logo_link = $tmp['value'];
+							}
+						}
+						if($tmp['name'] == "banner_image"){
+							if($tmp['value'] != ""){
+								$banner_image = $tmp['value'];
+							}
 						}
 					}
-					$DefaultData = $tmp2;
 				}else{
-					$DefaultData = "";
+					$logo_link = "";
+					$banner_image = "";
 				}
 				$data = array(
-					"link" => $DefaultData,
+					"logo_link" => $logo_link,
+					"banner_image" => $banner_image,
 				);
 				$CMS->tpl->data = $data;
 				$tmp = $CMS->tpl->Display($CMS->vars['tpl_name']."/block.logo", false);

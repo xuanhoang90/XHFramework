@@ -18,6 +18,9 @@
 				case 'viewlist':
 					$this->ListSlider();
 					break;
+				case 'slider_select':
+					$this->LoadSliderSelect();
+					break;
 				default:
 					$this->ListSlider();
 					break;
@@ -40,6 +43,11 @@
 			global $CMS, $DB;
 			$CMS->admin['system']->LoadSkinModule('slider');
 			echo $CMS->skin_slider->PageDefault();exit;
+			return;
+		}
+		public function LoadSliderSelect(){
+			global $CMS, $DB;
+			echo $CMS->admin['skin_global']->ListSliderSelect();exit;
 			return;
 		}
 	}

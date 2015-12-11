@@ -11,21 +11,26 @@
 			if($data != ""){
 				$DefaultData = $data;
 				foreach($DefaultData as $tmp){
-					if($tmp['name'] == "editor"){
-						$tmp2 = $tmp['value'];
+					if($tmp['name'] == "menu_name"){
+						$menu_name = $tmp['value'];
+					}
+					if($tmp['name'] == "menu_id"){
+						$menu_id = $tmp['value'];
 					}
 				}
-				$DefaultData = $tmp2;
 			}else{
-				$DefaultData = "HTML";
+				$menu_name = "Select menu";
+				$menu_id = "";
 			}
 			$output =<<<HERE
 			<form>
 				<div class="block-title row form-group">
 					<label class="control-label col-md-3" for="menu_select">Select menu: </label>
 					<div class="col-md-9">
-						<p class="name-preview" class="menu-name">Menu name</p>
-						<a class="object-select" href="#">Select menu</a>
+						<p class="name-preview menu-slider-name">{$menu_name}</p>
+						<input type="hidden" class="menu_name_input" name="menu_name" value="{$menu_name}" />
+						<input type="hidden" class="menu_id_input" name="menu_id" value="{$menu_id}" />
+						<a class="object-select menu-slider-select" href="#" data-toggle="modal" data-target="#window-menu-quickaccess"><i class="fa fa-location-arrow"></i> Select menu</a>
 					</div>
 				</div>
 			</form>
@@ -39,16 +44,20 @@ HERE;
 				if($Data['moduleData'] != ""){
 					$DefaultData = $Data['moduleData'];
 					foreach($DefaultData as $tmp){
-						if($tmp['name'] == "editor"){
-							$tmp2 = $tmp['value'];
+						if($tmp['name'] == "menu_name"){
+							$menu_name = $tmp['value'];
+						}
+						if($tmp['name'] == "menu_id"){
+							$menu_id = $tmp['value'];
 						}
 					}
-					$DefaultData = $tmp2;
 				}else{
-					$DefaultData = "";
+					$menu_name = "Select menu";
+					$menu_id = "";
 				}
 				$data = array(
-					"html" => $DefaultData,
+					"menu_name" => $menu_name,
+					"menu_id" => $menu_id,
 				);
 				$CMS->tpl->data = $data;
 				$tmp = $CMS->tpl->Display($CMS->vars['tpl_name']."/block.menu", false);

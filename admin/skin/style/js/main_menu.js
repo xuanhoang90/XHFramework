@@ -371,4 +371,92 @@ $(function(){
 		$(".menu-item-target-config").find(".item-data").first().find(".menu-label").find("p").html(_Name);
 		_ResetSort();
 	})
+	
+	//add image for item normal
+	$(document).on("click", ".x-attachment-select-one", function(e){
+		e.preventDefault();
+		$(this).parent().find(".thumb").addClass("will-change-image");
+	})
+	//add image-select
+	$(document).on("click", "#window-attachment-quickaccess .x-custom-action", function(e){
+		e.preventDefault();
+		var _ImageSelected = $("#window-attachment-quickaccess").find(".x-attachment-item-selected").find("img").attr("src");
+		$(".will-change-image").attr({"src":_ImageSelected});
+		$(".will-change-image").removeClass("will-change-image");
+	})
+	
+	//analytic sub menu data 
+	var _AnalyticSubMenuData = function(ele){
+		var _MenuData = [];
+		$(ele).children().each(function(){
+			if($(this).hasClass("menu-item")){
+				var _MenuType = "";
+				if($(this).hasClass("item-normal")){
+					_MenuType = "item-normal";
+				}else{
+					_MenuType = "";
+				}
+				var _MenuItemData = {
+					type: _MenuType,
+					data: JSON.parse($(this).attr("data")),
+					sub_data: _AnalyticSubMenuData($(this).find(".submenu").first()),
+				};
+			}
+			_MenuData.push(_MenuItemData);
+		})
+		var _SubMenuType = "";
+		if($(ele).hasClass("submenu-normal")){
+			_SubMenuType = "submenu-normal";
+		}else{
+			_SubMenuType = "";
+		}
+		var _NewMenuData = {
+			menutype: _SubMenuType,
+			data: _MenuData,
+		};
+		return _NewMenuData;
+	}
+	//analytic menu data
+	var _AnalyticMenuData = function(){
+		var _MenuData = [];
+		$(".sortable-edit-menu").children().each(function(){
+			if($(this).hasClass("menu-item")){
+				var _MenuItemData = {
+					data: JSON.parse($(this).attr("data")),
+					sub_data: _AnalyticSubMenuData($(this).find(".submenu").first()),
+				};
+			}
+			_MenuData.push(_MenuItemData);
+		})
+		return _MenuData;
+	}
+	//save data
+	$(".custom-menu-btn-act").find(".imp-act").click(function(e){
+		e.preventDefault();
+		if($(this).hasClass("save")){
+			$(".custom-menu-btn-act").find(".save").html("<i class='fa fa-cog fa-spin'></i> Save");
+			var _Link = $(this).attr("href");
+			var _MenuData = _AnalyticMenuData();
+			$.ajax({
+				method: "POST",
+				url: _Link,
+				data: { menudata: _MenuData, menuname: $(".x-master-name-input").val()}
+			}).done(function( data ) {
+				data = JSON.parse(data);
+				if(data.reload == "true"){
+					window.location.href=data.status;
+				}else{
+					$(".custom-menu-btn-act").find(".save").html("<i class='fa fa-check'></i> Save");
+				}
+			});
+		}
+		if($(this).hasClass("preview")){
+			alert("This version not support");
+		}
+		if($(this).hasClass("backtohome")){
+			if(confirm("Are your sure to leave this page!?")){
+				window.location.href=$(this).attr("data");
+			}
+		}
+	})
 })

@@ -649,8 +649,8 @@ HERE;
 		public function AttachmentPageNav($curPage = 1, $iPerPage = 18){
 			global $CMS, $DB;
 			$output = "";
-			if($data = $CMS->main_attachment->LoadListAttachmentData("image")){
-				$attNum = sizeof($data);
+			if($data = $CMS->main_attachment->LoadListAttachmentDataSize("image")){
+				$attNum = $data;
 				$maxPage = ceil($attNum/$iPerPage);
 			}else{
 				$attNum = 0;
@@ -1228,6 +1228,431 @@ HERE;
 				$output.=<<<HERE
 					<li><a class="disable" href="#" data="noproc">»</a></li>
 				</ul>
+HERE;
+			}
+			return $output;
+		}
+		public function MenuSelect(){
+			global $CMS, $DB;
+			$lang = $CMS->admin['system']->LoadLanguage('admin_global');
+			$output = "";
+			$output .=<<<HERE
+				<!-- Modal -->
+				<div class="modal fade" id="window-menu-quickaccess" role="dialog">
+					<div class="modal-dialog modal-lg">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">{$CMS->vars['lang']['acp_menu_window_quick_access']}</h4>
+							</div>
+							<div class="modal-body" style="padding: 0 !important;">
+							
+								<div class="box" style="margin: 0px !important;">
+									<div class="box-body xw-menu-list">
+										{$this->ListMenuSelect()}
+									</div>
+									<input type="hidden" id="x-menu-list-selected-tmp-data" value="" />
+								</div>
+								<script>
+									$(function(){
+										$(document).on("click", ".menu-slider-name-select", function(e){
+											$(".menu-slider-name-select").removeClass("selected");
+											$(this).addClass("selected");
+										})
+										//load menu page
+										$(document).on("click", ".x-menu-ajax-load-page", function(e){
+											e.preventDefault();
+											var _AjaxLink = $(this).attr("href");
+											if(_AjaxLink != "#"){
+												$("#window-menu-quickaccess").find(".xw-menu-list").find(".ajax-fake-loading").show();
+												$("#window-menu-quickaccess").find(".xw-menu-list").removeClass("active");
+												$(this).addClass("active");
+												$.ajax({
+													method: "POST",
+													url: _AjaxLink,
+													data: {}
+												}).done(function(data) {
+													$("#window-menu-quickaccess").find(".xw-menu-list").html(data);
+													$("#window-menu-quickaccess").find(".xw-menu-list").find(".ajax-fake-loading").hide();
+												})
+											}else{
+												//do nothing
+											}
+										})
+									})
+								</script>
+								
+							</div>
+							<div class="modal-footer">
+								<div class="btn-group pull-left">
+									<a class="btn btn-primary x-custom-action" data-dismiss="modal">
+										<i class="fa fa-check"></i> {$CMS->vars['lang']['acp_attachment_window_apply_btn']}
+									</a>
+								</div>
+								<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i> {$CMS->vars['lang']['acp_attachment_window_cancel_btn']}</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+HERE;
+			return $output;
+		}
+		public function ListMenuSelect(){
+			global $CMS, $DB;
+			$lang = $CMS->admin['system']->LoadLanguage('admin_global');
+			$output = "";
+			$itemPerPage = 18;
+			if($pageNum = intval($CMS->input['menu_page'])){
+				$Offset = $itemPerPage * ($pageNum - 1);
+			}else{
+				$pageNum = 1;
+				$Offset = 0;
+			}
+			$limit = $Offset.",".$itemPerPage;
+			if($data = $this->LoadListMenuData($limit)){
+				$output.=<<<HERE
+				<div class="col-xs-12 w-menu-im-show">
+					<div class="ajax-fake-loading">
+						<div class="loading">
+							<p><i class="fa fa-circle-o-notch fa-spin"></i> {$CMS->vars['lang']['acp_attachment_window_fake_loading']}</p>
+						</div>
+					</div>
+HERE;
+				foreach($data as $menu){
+					$output .=<<<HERE
+					<div class="col-xs-6 col-sm-4 col-md-4">
+						<p class="menu-slider-name-select" data="{$menu['id']}"><i class="fa fa-th-list"></i> <span>{$menu['name']}</span></p>
+					</div>
+					
+HERE;
+				}
+				$output .=<<<HERE
+				</div>
+				{$this->MenuPageNav($pageNum, $itemPerPage)}
+HERE;
+			}else{
+				$output.=<<<HERE
+				<div class="col-xs-12 w-menu-im-show">
+					<p>Empty</p>
+				</div>
+				{$this->MenuPageNav($pageNum, $itemPerPage)}
+HERE;
+			}
+			return $output;
+		}
+		public function LoadListMenuData($limit = 1000000){
+			global $CMS, $DB;
+			$DB->query("use ".WEBSITE_DBNAME);
+			$sql = $DB->query("SELECT id, name FROM menu WHERE 1=1 ORDER BY id DESC LIMIT {$limit}");
+			if($data = $sql->fetchAll()){
+				return $data;
+			}else{
+				return false;
+			}
+		}
+		public function MenuTotalRecord(){
+			global $CMS, $DB;
+			$DB->query("use ".WEBSITE_DBNAME);
+			$sql = $DB->query("SELECT sum(status) FROM menu");
+			if($data = $sql->fetchAll()){
+				return $data[0]['sum(status)'];
+			}else{
+				return false;
+			}
+		}
+		public function MenuPageNav($curPage = 1, $iPerPage = 10){
+			global $CMS, $DB;
+			$output = "";
+			if($data = $this->MenuTotalRecord()){
+				$attNum = $data;
+				$maxPage = ceil($attNum/$iPerPage);
+			}else{
+				$attNum = 0;
+				$maxPage = 1;
+			}
+			$nextPage = $curPage + 1;
+			$prevPage = $curPage - 1;
+			//check current page
+			if($curPage >= $maxPage){
+				$curPage = $maxPage;
+				$nextPage = "#";
+				$prevPage = $curPage - 1;
+			}
+			if(!$curPage){
+				$curPage = 1;
+				$nextPage = $curPage + 1;
+				$prevPage = '#';
+			}
+			//check next, prev
+			if(!$prevPage){
+				$prevPage = '#';
+			}
+			if($nextPage > $maxPage){
+				$nextPage = "#";
+			}
+			//out 
+			if($prevPage != "#"){
+				$output.=<<<HERE
+				<div class="col-xs-12 clearfix">
+					<ul class="pagination pagination-sm no-margin pull-right">
+						<li><a class="x-menu-ajax-load-page" href="{$CMS->vars['root_domain']}?site=admin&page=menu&action=menu_select&menu_page={$prevPage}">«</a></li>
+HERE;
+			}else{
+				$output.=<<<HERE
+				<div class="col-xs-12 clearfix">
+					<ul class="pagination pagination-sm no-margin pull-right">
+						<li><a class="x-menu-ajax-load-page disable" href="#">«</a></li>
+HERE;
+			}
+			//list 5 page prev
+			for($i = 5; $i > 0; $i--){
+				$page = $curPage - $i;
+				if($page > 0){
+					$output.=<<<HERE
+					<li><a class="x-menu-ajax-load-page" href="{$CMS->vars['root_domain']}?site=admin&page=menu&action=menu_select&menu_page={$page}">{$page}</a></li>
+HERE;
+				}
+			}
+			//current page
+			$output.=<<<HERE
+						<li><a class="x-menu-ajax-load-page active" href="#">{$curPage}</a></li>
+HERE;
+			//list 5 page next
+			for($i = 1; $i <= 5; $i++){
+				$page = $curPage + $i;
+				if($page <= $maxPage){
+					$output.=<<<HERE
+					<li><a class="x-menu-ajax-load-page" href="{$CMS->vars['root_domain']}?site=admin&page=menu&action=menu_select&menu_page={$page}">{$page}</a></li>
+HERE;
+				}
+			}
+			if($nextPage != "#"){
+				$output.=<<<HERE
+						<li><a class="x-menu-ajax-load-page" href="{$CMS->vars['root_domain']}?site=admin&page=menu&action=menu_select&menu_page={$nextPage}">»</a></li>
+					</ul>
+				</div>
+HERE;
+			}else{
+				$output.=<<<HERE
+						<li><a class="x-menu-ajax-load-page disable" href="#">»</a></li>
+					</ul>
+				</div>
+HERE;
+			}
+			return $output;
+		}
+		//Slider
+		public function SliderSelect(){
+			global $CMS, $DB;
+			$lang = $CMS->admin['system']->LoadLanguage('admin_global');
+			$output = "";
+			$output .=<<<HERE
+				<!-- Modal -->
+				<div class="modal fade" id="window-slider-quickaccess" role="dialog">
+					<div class="modal-dialog modal-lg">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">{$CMS->vars['lang']['acp_slider_window_quick_access']}</h4>
+							</div>
+							<div class="modal-body" style="padding: 0 !important;">
+							
+								<div class="box" style="margin: 0px !important;">
+									<div class="box-body xw-slider-list">
+										{$this->ListSliderSelect()}
+									</div>
+									<input type="hidden" id="x-slider-list-selected-tmp-data" value="" />
+								</div>
+								<script>
+									$(function(){
+										$(document).on("click", ".slider-slider-name-select", function(e){
+											$(".slider-slider-name-select").removeClass("selected");
+											$(this).addClass("selected");
+										})
+										//load slider page
+										$(document).on("click", ".x-slider-ajax-load-page", function(e){
+											e.preventDefault();
+											var _AjaxLink = $(this).attr("href");
+											if(_AjaxLink != "#"){
+												$("#window-slider-quickaccess").find(".xw-slider-list").find(".ajax-fake-loading").show();
+												$("#window-slider-quickaccess").find(".xw-slider-list").removeClass("active");
+												$(this).addClass("active");
+												$.ajax({
+													method: "POST",
+													url: _AjaxLink,
+													data: {}
+												}).done(function(data) {
+													$("#window-slider-quickaccess").find(".xw-slider-list").html(data);
+													$("#window-slider-quickaccess").find(".xw-slider-list").find(".ajax-fake-loading").hide();
+												})
+											}else{
+												//do nothing
+											}
+										})
+									})
+								</script>
+								
+							</div>
+							<div class="modal-footer">
+								<div class="btn-group pull-left">
+									<a class="btn btn-primary x-custom-action" data-dismiss="modal">
+										<i class="fa fa-check"></i> {$CMS->vars['lang']['acp_attachment_window_apply_btn']}
+									</a>
+								</div>
+								<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i> {$CMS->vars['lang']['acp_attachment_window_cancel_btn']}</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+HERE;
+			return $output;
+		}
+		public function ListSliderSelect(){
+			global $CMS, $DB;
+			$lang = $CMS->admin['system']->LoadLanguage('admin_global');
+			$output = "";
+			$itemPerPage = 18;
+			if($pageNum = intval($CMS->input['slider_page'])){
+				$Offset = $itemPerPage * ($pageNum - 1);
+			}else{
+				$pageNum = 1;
+				$Offset = 0;
+			}
+			$limit = $Offset.",".$itemPerPage;
+			if($data = $this->LoadListSliderData($limit)){
+				$output.=<<<HERE
+				<div class="col-xs-12 w-slider-im-show">
+					<div class="ajax-fake-loading">
+						<div class="loading">
+							<p><i class="fa fa-circle-o-notch fa-spin"></i> {$CMS->vars['lang']['acp_attachment_window_fake_loading']}</p>
+						</div>
+					</div>
+HERE;
+				foreach($data as $menu){
+					$output .=<<<HERE
+					<div class="col-xs-6 col-sm-4 col-md-4">
+						<p class="menu-slider-name-select" data="{$menu['id']}"><i class="fa fa-desktop"></i> <span>{$menu['name']}</span></p>
+					</div>
+					
+HERE;
+				}
+				$output .=<<<HERE
+				</div>
+				{$this->SliderPageNav($pageNum, $itemPerPage)}
+HERE;
+			}else{
+				$output.=<<<HERE
+				<div class="col-xs-12 w-slider-im-show">
+					<p>Empty</p>
+				</div>
+				{$this->SliderPageNav($pageNum, $itemPerPage)}
+HERE;
+			}
+			return $output;
+		}
+		public function LoadListSliderData($limit = 1000000){
+			global $CMS, $DB;
+			$DB->query("use ".WEBSITE_DBNAME);
+			$sql = $DB->query("SELECT id, name FROM slider WHERE 1=1 ORDER BY id DESC LIMIT {$limit}");
+			if($data = $sql->fetchAll()){
+				return $data;
+			}else{
+				return false;
+			}
+		}
+		public function SliderTotalRecord(){
+			global $CMS, $DB;
+			$DB->query("use ".WEBSITE_DBNAME);
+			$sql = $DB->query("SELECT sum(status) FROM slider");
+			if($data = $sql->fetchAll()){
+				return $data[0]['sum(status)'];
+			}else{
+				return false;
+			}
+		}
+		public function SliderPageNav($curPage = 1, $iPerPage = 10){
+			global $CMS, $DB;
+			$output = "";
+			if($data = $this->SliderTotalRecord()){
+				$attNum = $data;
+				$maxPage = ceil($attNum/$iPerPage);
+			}else{
+				$attNum = 0;
+				$maxPage = 1;
+			}
+			$nextPage = $curPage + 1;
+			$prevPage = $curPage - 1;
+			//check current page
+			if($curPage >= $maxPage){
+				$curPage = $maxPage;
+				$nextPage = "#";
+				$prevPage = $curPage - 1;
+			}
+			if(!$curPage){
+				$curPage = 1;
+				$nextPage = $curPage + 1;
+				$prevPage = '#';
+			}
+			//check next, prev
+			if(!$prevPage){
+				$prevPage = '#';
+			}
+			if($nextPage > $maxPage){
+				$nextPage = "#";
+			}
+			//out 
+			if($prevPage != "#"){
+				$output.=<<<HERE
+				<div class="col-xs-12 clearfix">
+					<ul class="pagination pagination-sm no-margin pull-right">
+						<li><a class="x-slider-ajax-load-page" href="{$CMS->vars['root_domain']}?site=admin&page=slider&action=slider_select&slider_page={$prevPage}">«</a></li>
+HERE;
+			}else{
+				$output.=<<<HERE
+				<div class="col-xs-12 clearfix">
+					<ul class="pagination pagination-sm no-margin pull-right">
+						<li><a class="x-slider-ajax-load-page disable" href="#">«</a></li>
+HERE;
+			}
+			//list 5 page prev
+			for($i = 5; $i > 0; $i--){
+				$page = $curPage - $i;
+				if($page > 0){
+					$output.=<<<HERE
+					<li><a class="x-slider-ajax-load-page" href="{$CMS->vars['root_domain']}?site=admin&page=slider&action=slider_select&slider_page={$page}">{$page}</a></li>
+HERE;
+				}
+			}
+			//current page
+			$output.=<<<HERE
+						<li><a class="x-slider-ajax-load-page active" href="#">{$curPage}</a></li>
+HERE;
+			//list 5 page next
+			for($i = 1; $i <= 5; $i++){
+				$page = $curPage + $i;
+				if($page <= $maxPage){
+					$output.=<<<HERE
+					<li><a class="x-slider-ajax-load-page" href="{$CMS->vars['root_domain']}?site=admin&page=slider&action=slider_select&slider_page={$page}">{$page}</a></li>
+HERE;
+				}
+			}
+			if($nextPage != "#"){
+				$output.=<<<HERE
+						<li><a class="x-slider-ajax-load-page" href="{$CMS->vars['root_domain']}?site=admin&page=slider&action=slider_select&slider_page={$nextPage}">»</a></li>
+					</ul>
+				</div>
+HERE;
+			}else{
+				$output.=<<<HERE
+						<li><a class="x-slider-ajax-load-page disable" href="#">»</a></li>
+					</ul>
+				</div>
 HERE;
 			}
 			return $output;

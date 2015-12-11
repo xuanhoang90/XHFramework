@@ -274,7 +274,7 @@ $(function(){
 		e.preventDefault();
 		$("#blockconfig").fadeOut(300);
 		var _CustomTitle = $(".edit-block-title").val();
-		var _CustomData = $(".extend-custome-module-type").find("form").serializeArray();
+		var _CustomData = $(".extend-custome-module-type").find("form").first().serializeArray();
 		$(".config-block").find(".block-title").html(_CustomTitle);
 		var _SerilizeData = {
 			title: _CustomTitle,
@@ -282,6 +282,7 @@ $(function(){
 			moduleData: _CustomData,
 		};
 		var _Tmp = JSON.stringify( _SerilizeData );
+		$(".config-block").attr({"data":""});
 		$(".config-block").attr({"data":_Tmp});
 		_ReloadBlockData(_Tmp);
 	})
@@ -814,6 +815,57 @@ $(function(){
 	//image-select click
 	$(document).on("click", ".image-select", function(e){
 		e.preventDefault();
-		
+		$(".image-select").removeClass("will-add-module-image");
+		$(this).addClass("will-add-module-image");
+	})
+	//add image-select
+	$(document).on("click", "#window-attachment-quickaccess .x-custom-action", function(e){
+		e.preventDefault();
+		var _ImageSelected = $("#window-attachment-quickaccess").find(".x-attachment-item-selected").find("img").attr("src");
+		$(".will-add-module-image").parent().find(".image-src").val(_ImageSelected);
+		$(".will-add-module-image").parent().find(".image-preview").attr({"src":_ImageSelected});
+		$(".image-select").removeClass("will-add-module-image");
+	})
+	
+	//object-select click
+	$(document).on("click", ".object-select", function(e){
+		e.preventDefault();
+		$(".object-select").removeClass("will-add-module-object");
+		$(this).addClass("will-add-module-object");
+	})
+	//add object-select
+	$(document).on("click", "#window-object-quickaccess .x-custom-action", function(e){
+		e.preventDefault();
+		var _ObjectID = $("#window-object-quickaccess").find(".contain-scroll").find(".selected").attr("data");
+		var _ObjectName = $("#window-object-quickaccess").find(".contain-scroll").find(".selected").find(".o-name").html();
+		var _ObjectLink = $("#window-object-quickaccess").find(".contain-scroll").find(".selected").find(".o-name").attr("data");
+		$(".will-add-module-object").parent().find(".link-preview").val(_ObjectLink);
+		$(".will-add-module-object").parent().find(".object-link").val(_ObjectLink);
+		$(".will-add-module-object").parent().find(".object-name").val(_ObjectName);
+		$(".will-add-module-object").parent().find(".name-preview").html(_ObjectName);
+		$(".will-add-module-object").parent().find(".object-id").val(_ObjectID);
+		$(".object-select").removeClass("will-add-module-object");
+	})
+	
+	//Complete menu select, slider select
+	$(document).on("click", ".menu-slider-select", function(e){
+		$(".menu-slider-select").removeClass("menu-slider-select-this");
+		$(this).addClass("menu-slider-select-this");
+	})
+	$(document).on("click", "#window-menu-quickaccess .x-custom-action", function(e){
+		e.preventDefault();
+		var _MenuName = $("#window-menu-quickaccess").find(".w-menu-im-show").find(".selected").find("span").html();
+		var _MenuID = $("#window-menu-quickaccess").find(".w-menu-im-show").find(".selected").attr("data");
+		$(".menu-slider-select-this").parent().find(".menu-slider-name").html(_MenuName);
+		$(".menu-slider-select-this").parent().find(".menu_name_input").val(_MenuName);
+		$(".menu-slider-select-this").parent().find(".menu_id_input").val(_MenuID);
+	})
+	$(document).on("click", "#window-slider-quickaccess .x-custom-action", function(e){
+		e.preventDefault();
+		var _SliderName = $("#window-slider-quickaccess").find(".w-slider-im-show").find(".selected").find("span").html();
+		var _SliderID = $("#window-slider-quickaccess").find(".w-slider-im-show").find(".selected").attr("data");
+		$(".menu-slider-select-this").parent().find(".menu-slider-name").html(_SliderName);
+		$(".menu-slider-select-this").parent().find(".slider_name_input").val(_SliderName);
+		$(".menu-slider-select-this").parent().find(".slider_id_input").val(_MenuID);
 	})
 })

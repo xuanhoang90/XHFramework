@@ -10,6 +10,8 @@
 		'acp_topbar_user_profile' => 'Tài khoản',
 		'acp_topbar_user_logout' => 'Thoát',
 		'acp_attachment_window_quick_access' => 'Thêm hình ảnh',
+		'acp_menu_window_quick_access' => 'Chọn menu',
+		'acp_slider_window_quick_access' => 'Chọn slider',
 		'lang_translate_of' => 'của',
 		'lang_translate_used' => 'đã sử dụng',
 		'acp_attachment_window_attm_list' => 'Danh sách hình ảnh',

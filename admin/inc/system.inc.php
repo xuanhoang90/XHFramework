@@ -209,11 +209,13 @@
 					'lang' => 'acp_menu_header_system_config_language',
 				),
 				//currency
+				/*
 				array(
 					'icon' => 'fa-dollar',
 					'link' => '?site=admin&page=config&action=currency',
 					'lang' => 'acp_menu_header_system_config_currentcy',
 				),
+				*/
 			)
 		),
 		//config
@@ -300,6 +302,7 @@
 			)
 		),
 		//module manage
+		/*
 		array(
 			'root' => array(
 				'icon' => 'fa-cubes text-green',
@@ -308,6 +311,7 @@
 				'type' => 'link',
 			)
 		),
+		*/
 		//header member
 		array(
 			'root' => array(

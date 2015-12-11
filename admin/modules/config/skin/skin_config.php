@@ -33,6 +33,7 @@ CSS;
 			<!-- AdminLTE for demo purposes -->
 			<!--<script src="{$CMS->admin['style_dir']}/dist/js/demo.js" type="text/javascript"></script>-->
 			<script src="{$CMS->admin['style_dir']}/plugins/bootstrap-switch/bootstrap-toggle.min.js" type="text/javascript"></script>
+			<script src="{$CMS->admin['style_dir']}/js/info_config.js" type="text/javascript"></script>
 CSS;
 			$title = $CMS->vars['lang']['acp_main_page_title'];
 			$output = "";
@@ -125,8 +126,26 @@ CSS;
 			<!-- AdminLTE for demo purposes -->
 			<!--<script src="{$CMS->admin['style_dir']}/dist/js/demo.js" type="text/javascript"></script>-->
 			<script src="{$CMS->admin['style_dir']}/plugins/bootstrap-switch/bootstrap-toggle.min.js" type="text/javascript"></script>
+			<script src="{$CMS->admin['style_dir']}/js/info_config.js" type="text/javascript"></script>
 CSS;
 			$title = $CMS->vars['lang']['acp_main_page_title'];
+			//load config data
+			$DB->query("use ".WEBSITE_DBNAME);
+			$sql = $DB->query("SELECT value FROM config WHERE `key` LIKE 'config_info'");
+			if($data = $sql->fetchAll()){
+				$data = unserialize($data[0]['value']);
+				$pagename = $data['pagename'];
+				$company = $data['company'];
+				$email = $data['email'];
+				$phone = $data['phone'];
+				$blog = $data['blog'];
+			}else{
+				$pagename = '';
+				$company = '';
+				$email = '';
+				$phone = '';
+				$blog = '';
+			}
 			$output = "";
 			$output .=<<<HERE
 				{$CMS->admin['skin_global']->header($title, $custom_style)}
@@ -154,18 +173,42 @@ CSS;
 							</section>
 
 							<!-- Main content -->
-							<section class="content"><form method="POST" action="#">
+							<section class="content admin-config-info"><form method="POST" action="#">
 								<div class="x-config-input-wrap">
 									<h1 class="config-title">{$CMS->vars['lang']['acp_config_info']}</h1>
 								</div>
 								<div class="x-config-input-wrap">
 									<label class="control-label col-md-6" for="config_pagename">{$CMS->vars['lang']['acp_config_in_pagename']}:</label>
 									<div class="col-md-6">
-										<input type="text" class="form-control" name="config_pagename" id="config_pagename" placeholder="{$CMS->vars['lang']['acp_config_in_pagename']}" value="" />
+										<input type="text" class="form-control config_pagename" name="config_pagename" placeholder="{$CMS->vars['lang']['acp_config_in_pagename']}" value="{$pagename}" />
 									</div>
 								</div>
-								<div class="x-config-input-wrap"><div class="object_action_btn">
-									<button type="submit" class="act save"><i class="fa fa-check"></i> {$CMS->vars['lang']['acp_config_btn_save']}</button>
+								<div class="x-config-input-wrap">
+									<label class="control-label col-md-6" for="config_company">{$CMS->vars['lang']['acp_config_in_company']}:</label>
+									<div class="col-md-6">
+										<input type="text" class="form-control config_company" name="config_company" placeholder="{$CMS->vars['lang']['acp_config_in_company']}" value="{$company}" />
+									</div>
+								</div>
+								<div class="x-config-input-wrap">
+									<label class="control-label col-md-6" for="config_email">{$CMS->vars['lang']['acp_config_in_email']}:</label>
+									<div class="col-md-6">
+										<input type="text" class="form-control config_email" name="config_email" placeholder="{$CMS->vars['lang']['acp_config_in_email']}" value="{$email}" />
+									</div>
+								</div>
+								<div class="x-config-input-wrap">
+									<label class="control-label col-md-6" for="config_phone">{$CMS->vars['lang']['acp_config_in_phone']}:</label>
+									<div class="col-md-6">
+										<input type="text" class="form-control config_phone" name="config_phone" placeholder="{$CMS->vars['lang']['acp_config_in_phone']}" value="{$phone}" />
+									</div>
+								</div>
+								<div class="x-config-input-wrap">
+									<label class="control-label col-md-6" for="config_blog">{$CMS->vars['lang']['acp_config_in_blog']}:</label>
+									<div class="col-md-6">
+										<input type="text" class="form-control config_blog" name="config_blog" placeholder="{$CMS->vars['lang']['acp_config_in_blog']}" value="{$blog}" />
+									</div>
+								</div>
+								<div class="x-config-input-wrap"><div class="object_action_btn save-info-config">
+									<button type="submit" class="act save" data="{$CMS->vars['root_domain']}"><i class="fa fa-check"></i> {$CMS->vars['lang']['acp_config_btn_save']}</button>
 									<a class="act backtohome" href="{$CMS->vars['root_domain']}/taka_acp"><i class="fa fa-arrow-circle-o-left"></i> {$CMS->vars['lang']['acp_config_btn_backtohome']}</a>
 								</div></div>
 							</form></section><!-- /.content -->
@@ -205,6 +248,7 @@ CSS;
 			<!-- AdminLTE for demo purposes -->
 			<!--<script src="{$CMS->admin['style_dir']}/dist/js/demo.js" type="text/javascript"></script>-->
 			<script src="{$CMS->admin['style_dir']}/plugins/bootstrap-switch/bootstrap-toggle.min.js" type="text/javascript"></script>
+			<script src="{$CMS->admin['style_dir']}/js/info_config.js" type="text/javascript"></script>
 CSS;
 			$title = $CMS->vars['lang']['acp_main_page_title'];
 			$output = "";
@@ -279,6 +323,7 @@ CSS;
 			<!-- AdminLTE for demo purposes -->
 			<!--<script src="{$CMS->admin['style_dir']}/dist/js/demo.js" type="text/javascript"></script>-->
 			<script src="{$CMS->admin['style_dir']}/plugins/bootstrap-switch/bootstrap-toggle.min.js" type="text/javascript"></script>
+			<script src="{$CMS->admin['style_dir']}/js/info_config.js" type="text/javascript"></script>
 CSS;
 			$title = $CMS->vars['lang']['acp_main_page_title'];
 			$output = "";

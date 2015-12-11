@@ -1,17 +1,17 @@
-<?php /* Smarty version 3.1.28-dev/54, created on 2015-12-07 17:24:37
+<?php /* Smarty version 3.1.28-dev/54, created on 2015-12-12 00:33:28
          compiled from "C:\xampp\htdocs\mtb\themes\tpl-01\block.post_list.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:1110756655e65dabb34_02132226%%*/
+/*%%SmartyHeaderCode:20229566b08e8e1ab76_84504617%%*/
 $_valid = $_smarty_tpl->decodeProperties(array (
   'has_nocache_code' => false,
   'version' => '3.1.28-dev/54',
-  'unifunc' => 'content_56655e65dd2c42_75651467',
+  'unifunc' => 'content_566b08e8e32280_74344493',
   'file_dependency' => 
   array (
     '71bd8c894a3825f753190f31e22b91263c31f3f1' => 
     array (
       0 => 'C:\\xampp\\htdocs\\mtb\\themes\\tpl-01\\block.post_list.tpl',
-      1 => 1443552628,
+      1 => 1449828664,
       2 => 'file',
     ),
   ),
@@ -21,15 +21,14 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'isChild' => false,
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_56655e65dd2c42_75651467')) {
-function content_56655e65dd2c42_75651467 ($_smarty_tpl) {
-$_smarty_tpl->compiled->nocache_hash = '1110756655e65dabb34_02132226';
+if ($_valid && !is_callable('content_566b08e8e32280_74344493')) {
+function content_566b08e8e32280_74344493 ($_smarty_tpl) {
+$_smarty_tpl->compiled->nocache_hash = '20229566b08e8e1ab76_84504617';
 ?>
-<div class="tpl-01-block-post-list tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-" data="<?php echo $_smarty_tpl->tpl_vars['flag']->value;?>
-">
+<div class="tpl-01-block-post-list">
 	<div class="block-header">
-		<p class="title"><i class="fa fa-newspaper-o"></i> Danh sách bài viết</p>
+		<p class="title">Danh sách bài viết: <?php echo $_smarty_tpl->tpl_vars['object_name']->value;?>
+</p>
 	</div>
 	<div class="list-post">
 		<?php $_smarty_tpl->tpl_vars['i'] = new Smarty_Variable(1, null, 0);?>
@@ -77,73 +76,8 @@ $_smarty_tpl->tpl_vars['post'] = $__foreach_post_0_saved_item;
 }
 ?>
 	</div>
-	<?php echo '<script'; ?>
->
-		$(function(){
-			//slider auto play
-			var _XHSlider = function(ele){
-				var _NumberSlider = $(ele).find(".list-post").children().length;
-				var _ExtendHtml = "<div class='x-nav-btn-slider'>";
-				for(i = 1; i <= _NumberSlider; i++){
-					_ExtendHtml += "<p class='slider-btn-switch' data='"+i+"'>"+i+"</p>";
-				}
-				_ExtendHtml += "</div>";
-				$(ele).append(_ExtendHtml);
-				$(ele).find(".one-post").hide();
-				$(ele).find(".post-1").show();
-				$(ele).find(".slider-btn-switch").first().addClass("active");
-			}
-			var _Flag = $(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-").attr("data");
-			if(_Flag == "frontend"){
-				if($(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-").parent().parent().parent().hasClass("col-md-12")){
-					$(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-").addClass("tpl-01-block-post-list-large");
-					_XHSlider(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-");
-				}
-				if($(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-").parent().parent().parent().hasClass("col-md-9")){
-					$(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-").addClass("tpl-01-block-post-list-large");
-					_XHSlider(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-");
-				}
-				if($(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-").parent().parent().parent().hasClass("col-md-8")){
-					$(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-").addClass("tpl-01-block-post-list-large");
-					_XHSlider(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-");
-				}
-			}
-			if(_Flag == "backend"){
-				if($(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-").parent().parent().parent().hasClass("col-md-12")){
-					$(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-").addClass("tpl-01-block-post-list-large");
-					_XHSlider(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-");
-				}
-				if($(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-").parent().parent().parent().hasClass("col-md-9")){
-					$(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-").addClass("tpl-01-block-post-list-large");
-					_XHSlider(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-");
-				}
-				if($(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-").parent().parent().parent().hasClass("col-md-8")){
-					$(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-").addClass("tpl-01-block-post-list-large");
-					_XHSlider(".tpl-01-block-post-list-<?php echo $_smarty_tpl->tpl_vars['rand']->value;?>
-");
-				}
-			}
-		})
-	<?php echo '</script'; ?>
->
+	<a href="<?php echo $_smarty_tpl->tpl_vars['object_link']->value;?>
+">Xem tất cả</a>
 </div><?php }
 }
 ?>

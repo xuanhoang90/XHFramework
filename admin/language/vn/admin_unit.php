@@ -13,6 +13,7 @@
 		'unitname_login' => 'Khu vực thành viên',
 		'unitname_media' => 'Thư viện',
 		'unitname_menu' => 'Menu chính',
+		'unitname_slider' => 'Slider',
 		'unitname_payment' => 'Thanh toán online',
 		'unitname_post_category' => 'Danh mục bài viết',
 		'unitname_post_list' => 'Danh sách bài viết',
