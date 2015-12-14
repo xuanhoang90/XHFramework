@@ -5,7 +5,8 @@
 	}
 	$language = array(
 		'acp_menu_header' => 'Danh sách chức năng',
-		'acp_menu_item_home' => 'Trang chủ',
+		'acp_menu_item_home' => 'Admin',
+		'acp_menu_item_homepage' => 'Trang chủ',
 		
 		'acp_menu_prods' => 'Bán hàng',
 		'acp_menu_header_product' => 'Sản phẩm',
@@ -47,6 +48,8 @@
 		'acp_menu_header_member_manage' => 'Quản lý',
 		
 		'acp_menu_header_customer' => 'Người dùng',
+		
+		'acp_menu_header_contact' => 'Contact email',
 		
 		'acp_menu_media' => 'Thư viện',
 		'acp_menu_header_image' => 'Hình ảnh',

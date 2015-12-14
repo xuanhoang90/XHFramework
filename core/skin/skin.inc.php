@@ -26,9 +26,7 @@
 					</section>
 
 					<!-- Main content -->
-					<section class="content">
-						{$this->DisplayPage()}
-					</section><!-- /.content -->
+					{$this->DisplayPage()}
 					
 					<section class="content-footer">
 						{$this->ManagerAction()}
@@ -120,24 +118,29 @@ HERE;
 							$bgfull = "";
 						}
 						if($bgfull == "true"){
-							$bgfull = "x-row-bgfull";
+							$cssbgfull = "background-image: url({$bgurl})";
+							$cssbg = "";
 						}else{
-							$bgfull = "";
+							$cssbgfull = "";
+							$cssbg = "background-image: url({$bgurl})";
 						}
 						if($wfull == "true"){
 							$wfull = "x-row-wfull";
 						}else{
 							$wfull = "";
 						}
+						
+						//<section class="content">
 						$output .=<<<HERE
-						<div class='row {$bgfull} {$wfull}' style="background-image: url({$bgurl})">
+						<section class="content" style="{$cssbgfull}">
+							<div class='row {$wfull}' style="{$cssbg}">
 HERE;
 							//loop subrow
 							if(is_array($Row['data'])){
 								foreach($Row['data'] as $Subrow){
 									//open subrow
 									$output .=<<<HERE
-									<div class='col-xs-12'>
+									<div class='col-xs-12 x-col-xs-12'>
 HERE;
 										//loop columb
 										if(is_array($Subrow['data'])){
@@ -164,7 +167,7 @@ HERE;
 												}
 												//open columb
 												$output .=<<<HERE
-													<div class='col-md-{$size} {$responsive}'>
+													<div class='col-md-{$size} {$responsive} x-col-md-responsive'>
 HERE;
 													//loop block
 													if(is_array($Col['data'])){
@@ -176,7 +179,7 @@ HERE;
 															}
 															//open block content
 															$output .=<<<HERE
-															<div class='row'>
+															<div class='row x-row'>
 																<div class='block-content'>
 HERE;
 																//load block data
@@ -215,7 +218,8 @@ HERE;
 							}
 						//close row
 						$output .=<<<HERE
-						</div>
+							</div>
+						</section>
 HERE;
 					}
 				}

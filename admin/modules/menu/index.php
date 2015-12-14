@@ -18,6 +18,9 @@
 				case 'editmenu':
 					$this->EditMainMenu();
 					break;
+				case 'deletemenu':
+					echo $this->DeleteMenu();exit;
+					break;
 				case 'savemenu':
 					$this->SaveMenu();
 					break;
@@ -79,5 +82,20 @@
 				$res = array("status" => "error","reload" => "false");
 			}
 			echo json_encode($res);exit;
+		}
+		public function DeleteMenu(){
+			global $CMS, $DB;
+			if(intval($CMS->input['id'])){
+				$menu_id = $CMS->input['id'];
+				$DB->query("use ".WEBSITE_DBNAME);
+				$sql = "DELETE FROM menu WHERE id='{$menu_id}'";
+				if($DB->query($sql)){
+					return "OK";
+				}else{
+					return "Error sql";
+				}
+			}else{
+				return "Error id";
+			}
 		}
 	}

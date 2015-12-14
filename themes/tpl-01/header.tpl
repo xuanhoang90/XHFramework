@@ -17,10 +17,10 @@
 			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		<!-- Custom style -->
-		
-		<script src="{$style_dir}/js/jquery-2.1.4.min.js"></script>
-		<script src="{$style_dir}/js/xhslider.js"></script>
 		<link href="{$style_dir}/css/reset.css" rel="stylesheet">
 		<link href="{$style_dir}/css/style.css" rel="stylesheet">
+		<link href="{$style_dir}/css/magic.css" rel="stylesheet">
+		<link href="{$style_dir}/css/x-mega-menu.css" rel="stylesheet">
+		<link href="{$style_dir}/css/x-slider.css" rel="stylesheet">
 	</head>
 	<body>

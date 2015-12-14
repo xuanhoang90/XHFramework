@@ -8,6 +8,9 @@
 		public function Start(){
 			global $CMS, $DB;
 			$output = "";
+			$CMS->tpl->data = array();
+			$tmp = $CMS->tpl->Display($CMS->vars['tpl_name']."/main.post_category", false);
+			$output = $tmp;
 			return $output;
 		}
 	}

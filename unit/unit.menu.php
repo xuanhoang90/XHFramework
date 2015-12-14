@@ -58,7 +58,9 @@ HERE;
 				$data = array(
 					"menu_name" => $menu_name,
 					"menu_id" => $menu_id,
+					"menu_data" => $this->LoadMenuData($menu_id),
 				);
+				//echo "<pre>";print_r($data['menu_data']);exit;
 				$CMS->tpl->data = $data;
 				$tmp = $CMS->tpl->Display($CMS->vars['tpl_name']."/block.menu", false);
 				$output = $tmp;
@@ -66,6 +68,20 @@ HERE;
 				$output = "";
 			}
 			return $output;
+		}
+		public function LoadMenuData($id){
+			global $CMS, $DB;
+			if($id){
+				$DB->query("use ".WEBSITE_DBNAME);
+				$sql = $DB->query("SELECT * FROM menu WHERE id='{$id}'");
+				if($data = $sql->fetchAll()){
+					return unserialize($data[0]['data']);
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
 		}
 	}
 ?>

@@ -1,17 +1,17 @@
-<?php /* Smarty version 3.1.28-dev/54, created on 2015-12-10 10:19:08
+<?php /* Smarty version 3.1.28-dev/54, created on 2015-12-15 03:13:54
          compiled from "C:\xampp\htdocs\mtb\themes\tpl-01\header.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:2425668ef2c71b842_13511989%%*/
+/*%%SmartyHeaderCode:14239566f230251ee80_06438164%%*/
 $_valid = $_smarty_tpl->decodeProperties(array (
   'has_nocache_code' => false,
   'version' => '3.1.28-dev/54',
-  'unifunc' => 'content_5668ef2c76d8d8_82566106',
+  'unifunc' => 'content_566f2302594185_24253781',
   'file_dependency' => 
   array (
     'bfe8b93980c98e83f0c283998862773c11bf9901' => 
     array (
       0 => 'C:\\xampp\\htdocs\\mtb\\themes\\tpl-01\\header.tpl',
-      1 => 1446695720,
+      1 => 1450103762,
       2 => 'file',
     ),
   ),
@@ -21,9 +21,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'isChild' => false,
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_5668ef2c76d8d8_82566106')) {
-function content_5668ef2c76d8d8_82566106 ($_smarty_tpl) {
-$_smarty_tpl->compiled->nocache_hash = '2425668ef2c71b842_13511989';
+if ($_valid && !is_callable('content_566f2302594185_24253781')) {
+function content_566f2302594185_24253781 ($_smarty_tpl) {
+$_smarty_tpl->compiled->nocache_hash = '14239566f230251ee80_06438164';
 ?>
 <!DOCTYPE html>
 <html class="no-skrollr">
@@ -52,19 +52,16 @@ $_smarty_tpl->compiled->nocache_hash = '2425668ef2c71b842_13511989';
 >
 		<![endif]-->
 		<!-- Custom style -->
-		
-		<?php echo '<script'; ?>
- src="<?php echo $_smarty_tpl->tpl_vars['style_dir']->value;?>
-/js/jquery-2.1.4.min.js"><?php echo '</script'; ?>
->
-		<?php echo '<script'; ?>
- src="<?php echo $_smarty_tpl->tpl_vars['style_dir']->value;?>
-/js/xhslider.js"><?php echo '</script'; ?>
->
 		<link href="<?php echo $_smarty_tpl->tpl_vars['style_dir']->value;?>
 /css/reset.css" rel="stylesheet">
 		<link href="<?php echo $_smarty_tpl->tpl_vars['style_dir']->value;?>
 /css/style.css" rel="stylesheet">
+		<link href="<?php echo $_smarty_tpl->tpl_vars['style_dir']->value;?>
+/css/magic.css" rel="stylesheet">
+		<link href="<?php echo $_smarty_tpl->tpl_vars['style_dir']->value;?>
+/css/x-mega-menu.css" rel="stylesheet">
+		<link href="<?php echo $_smarty_tpl->tpl_vars['style_dir']->value;?>
+/css/x-slider.css" rel="stylesheet">
 	</head>
 	<body><?php }
 }

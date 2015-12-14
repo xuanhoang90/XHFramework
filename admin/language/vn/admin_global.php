@@ -12,6 +12,7 @@
 		'acp_attachment_window_quick_access' => 'Thêm hình ảnh',
 		'acp_menu_window_quick_access' => 'Chọn menu',
 		'acp_slider_window_quick_access' => 'Chọn slider',
+		'acp_page_window_quick_access' => 'Chọn Page',
 		'lang_translate_of' => 'của',
 		'lang_translate_used' => 'đã sử dụng',
 		'acp_attachment_window_attm_list' => 'Danh sách hình ảnh',

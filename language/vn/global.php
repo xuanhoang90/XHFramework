@@ -9,4 +9,6 @@
 		'page_title_post_category' => 'Post category',
 		'page_title_product' => 'Product',
 		'page_title_product_category' => 'Product category',
+		'page_title_about_us' => 'About us',
+		'page_title_contact' => 'Contact',
 	);

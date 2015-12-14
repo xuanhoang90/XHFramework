@@ -110,6 +110,7 @@ CSS;
 					{$this->WindowSelectItemType()}
 					{$CMS->admin['skin_global']->ObjectInsert()}
 					{$CMS->admin['skin_global']->AttachmentImage()}
+					{$CMS->admin['skin_global']->PageSelect()}
 				</body>
 				{$CMS->admin['skin_global']->footer($plugin)}
 HERE;
@@ -303,12 +304,12 @@ HERE;
 															$checked = "";
 														}
 														$output .=<<<HERE
-														<tr>
+														<tr class="menu-row">
 															<td>{$oneMenu['id']}</td>
 															<td><p class="pagename"><i class='fa {$oneMenu['icon']}'></i> {$oneMenu['name']}</p></td>
 															<td>
 																<a class="act edit" target="_blank" href="{$CMS->vars['root_domain']}/?site=admin&page=menu&action=editmenu&id={$oneMenu['id']}"><i class='fa fa-edit'></i> Edit</a>
-																<a class="act edit" target="_blank" href="{$CMS->vars['root_domain']}/?site=admin&page=menu&action=deletemenu&id={$oneMenu['id']}"><i class='fa fa-trash'></i> Delete</a>
+																<a class="act delete-item" target="_blank" href="{$CMS->vars['root_domain']}/?site=admin&page=menu&action=deletemenu&id={$oneMenu['id']}"><i class='fa fa-trash'></i> Delete</a>
 															</td>
 															<td>
 																<input type="checkbox" {$checked} data-toggle="toggle" data-on="<i class='fa fa-eye'></i> Enable" data-off="<i class='fa fa-eye-slash'></i> Disable">
@@ -335,7 +336,24 @@ HERE;
 												</ul>
 											</div>-->
 										</div><!-- /.box -->
-										
+										<script>
+											$(function(){
+												$(document).on("click", ".menu-row .delete-item", function(e){
+													e.preventDefault();
+													if(confirm("Are you sure?")){
+														var _Link = $(this).attr("href");
+														var _Target = $(this).parent().parent();
+														$.ajax({
+															method: "POST",
+															url: _Link,
+															data: {}
+														}).done(function( data ){
+															_Target.fadeOut().remove();
+														});
+													}
+												})
+											})
+										</script>
 									</div>
 								</div>
 							</section><!-- /.content -->
@@ -428,6 +446,30 @@ HERE;
 														<div class="form-group">
 															<input class="link form-control" type="text" name="menu_object_link" placeholder="{$CMS->vars['root_domain']}/object link">
 														</div>
+													</div>
+												</div>
+											</div>
+											<div class="setting-init menu-item-page menu-item-object-can-edit">
+												<div class="tab-master">
+													<div class='checkbox checkbox-info checkbox-circle'>
+														<input type="checkbox" checked="" id="checkbox_page" name="item_type" class="item-type-selection"><label for="checkbox_page"> Page</label>
+													</div>
+												</div>
+												<div class="tab-slaver row">
+													<div class="col-md-2">
+														<img src="{$CMS->vars['root_domain']}/admin/skin/style/images/default_image.png" class="thumb" />
+														<a class="btn btn-primary x-attachment-select-one" style="margin-top: 5px;" data-toggle="modal" data-target="#window-attachment-quickaccess"> Change image</a>
+													</div>
+													<div class="col-md-8">
+														<div class="form-group">
+															<input class="name form-control" type="text" name="menu_object_name" placeholder="Page name">
+														</div>
+														<div class="form-group">
+															<input class="link form-control" type="text" name="menu_object_link" placeholder="{$CMS->vars['root_domain']}/page link">
+														</div>
+													</div>
+													<div class="col-md-2">
+														<a class="btn btn-primary" style="margin-top: 5px;" data-toggle="modal" data-target="#window-page-quickaccess"> Change</a>
 													</div>
 												</div>
 											</div>

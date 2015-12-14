@@ -15,6 +15,10 @@ RewriteCond 	%{REQUEST_FILENAME} !-l
 RewriteRule    ^taka_acp									index.php?site=admin	   								[NC,L]
 RewriteRule    ^home					    				index.php?site=home										[NC,L]
 
+RewriteRule    ^contact					    				index.php?site=contact										[NC,L]
+
+RewriteRule    ^about_us					    			index.php?site=about_us										[NC,L]
+
 #Rewrite product
 RewriteRule    ^product/([A-Za-z0-9-]+)/?$    				index.php?site=product&product=$1    					[NC,L]
 RewriteRule    ^product_category/([A-Za-z0-9-]+)/?$    		index.php?site=product_category&category=$1    			[NC,L]

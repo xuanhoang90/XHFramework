@@ -145,6 +145,19 @@ HERE;
 		public function PageDefault(){
 			global $CMS, $DB;
 			$CMS->admin['system']->LoadLanguage('admin_edit_tpl');
+			
+			//load theme style 
+			$cssAdd = "";
+			$files = array_diff(scandir("themes/{$CMS->vars['tpl_name']}/css"), array('..', '.'));
+			foreach($files as $file){
+				$cssAdd .= "<link href='{$CMS->vars['root_domain']}/themes/{$CMS->vars['tpl_name']}/css/{$file}' rel='stylesheet' type='text/css' />";
+			}
+			$jsAdd = "";
+			$files = array_diff(scandir("themes/{$CMS->vars['tpl_name']}/js"), array('..', '.'));
+			foreach($files as $file){
+				$jsAdd .= "<script src='{$CMS->vars['root_domain']}/themes/{$CMS->vars['tpl_name']}/js/{$file}' type='text/javascript'></script>";
+			}
+			
 			$custom_style = <<<CSS
 			<!-- Theme style -->
 			<link href="{$CMS->admin['style_dir']}/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
@@ -152,7 +165,7 @@ HERE;
 				 folder instead of downloading all of them to reduce the load. -->
 			<link href="{$CMS->admin['style_dir']}/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 			<link href="{$CMS->admin['style_dir']}/edit_tpl.css" rel="stylesheet" type="text/css" />
-			<link href="{$CMS->vars['root_domain']}/themes/{$CMS->vars['tpl_name']}/css/style.css" rel="stylesheet" type="text/css" />
+			{$cssAdd}
 			<link href="{$CMS->admin['style_dir']}/plugins/bootstrap-switch/bootstrap-toggle.min.css" rel="stylesheet" type="text/css" />
 			<link href="{$CMS->admin['style_dir']}/checkbox.css" rel="stylesheet" type="text/css" />
 			<link href="{$CMS->admin['style_dir']}/plugins/selectpicker/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
@@ -178,6 +191,7 @@ CSS;
 			<script src="{$CMS->admin['style_dir']}/plugins/fileupload/js/setup.js" type="text/javascript" ></script>
 			<script src="{$CMS->admin['style_dir']}/plugins/spectrum/spectrum.js" type="text/javascript" ></script>
 			<script src="{$CMS->admin['style_dir']}/js/w_object_insert.js" type="text/javascript"></script>
+			
 CSS;
 			$title = $CMS->vars['lang']['acp_main_page_title'];
 			$output = "";
@@ -228,6 +242,7 @@ HERE;
 							<section class="content">
 								<div class="row">
 									<div class="col-xs-12 contain-change-tpl">
+										<h2>Page name: {$PageData['name']}</h2>
 										<div class="sortable containpageid" data="{$id}">
 											{$this->LoadPageLayout($PageData)}
 											<span class="addsubrow disabled"><i class="fa fa-plus fa-2x"></i></span>

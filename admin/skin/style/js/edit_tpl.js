@@ -866,6 +866,6 @@ $(function(){
 		var _SliderID = $("#window-slider-quickaccess").find(".w-slider-im-show").find(".selected").attr("data");
 		$(".menu-slider-select-this").parent().find(".menu-slider-name").html(_SliderName);
 		$(".menu-slider-select-this").parent().find(".slider_name_input").val(_SliderName);
-		$(".menu-slider-select-this").parent().find(".slider_id_input").val(_MenuID);
+		$(".menu-slider-select-this").parent().find(".slider_id_input").val(_SliderID);
 	})
 })

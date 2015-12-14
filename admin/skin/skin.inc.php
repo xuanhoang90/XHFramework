@@ -1657,4 +1657,96 @@ HERE;
 			}
 			return $output;
 		}
+		//page
+		public function PageSelect(){
+			global $CMS, $DB;
+			$lang = $CMS->admin['system']->LoadLanguage('admin_global');
+			$output = "";
+			$output .=<<<HERE
+				<!-- Modal -->
+				<div class="modal fade" id="window-page-quickaccess" role="dialog">
+					<div class="modal-dialog modal-lg">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">{$CMS->vars['lang']['acp_page_window_quick_access']}</h4>
+							</div>
+							<div class="modal-body" style="padding: 0 !important;">
+							
+								<div class="box" style="margin: 0px !important;">
+									<div class="box-body xw-page-list">
+										{$this->ListPageSelect()}
+									</div>
+									<input type="hidden" id="x-page-list-selected-tmp-data" value="" />
+								</div>
+								<script>
+									$(function(){
+										$(document).on("click", ".page-name-select", function(e){
+											$(".page-name-select").removeClass("selected");
+											$(this).addClass("selected");
+										})
+									})
+								</script>
+								
+							</div>
+							<div class="modal-footer">
+								<div class="btn-group pull-left">
+									<a class="btn btn-primary x-custom-action" data-dismiss="modal">
+										<i class="fa fa-check"></i> {$CMS->vars['lang']['acp_attachment_window_apply_btn']}
+									</a>
+								</div>
+								<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i> {$CMS->vars['lang']['acp_attachment_window_cancel_btn']}</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+HERE;
+			return $output;
+		}
+		public function ListPageSelect(){
+			global $CMS, $DB;
+			$lang = $CMS->admin['system']->LoadLanguage('admin_global');
+			$output = "";
+			if($data = $this->LoadListPageData()){
+				$output.=<<<HERE
+				<div class="col-xs-12 w-page-im-show">
+					<div class="ajax-fake-loading">
+						<div class="loading">
+							<p><i class="fa fa-circle-o-notch fa-spin"></i> {$CMS->vars['lang']['acp_attachment_window_fake_loading']}</p>
+						</div>
+					</div>
+HERE;
+				foreach($data as $page){
+					$output .=<<<HERE
+					<div class="col-xs-6 col-sm-4 col-md-4">
+						<p class="page-name-select" data="{$CMS->vars['root_domain']}/{$page['nice_url']}"><i class="fa fa-desktop"></i> <span>{$page['name']}</span></p>
+					</div>
+					
+HERE;
+				}
+				$output .=<<<HERE
+				</div>
+HERE;
+			}else{
+				$output.=<<<HERE
+				<div class="col-xs-12 w-page-im-show">
+					<p>Empty</p>
+				</div>
+HERE;
+			}
+			return $output;
+		}
+		public function LoadListPageData(){
+			global $CMS, $DB;
+			$DB->query("use ".WEBSITE_DBNAME);
+			$sql = $DB->query("SELECT name, nice_url FROM page_description WHERE lang_id='1' ");
+			if($data = $sql->fetchAll()){
+				return $data;
+			}else{
+				return false;
+			}
+		}
 	}

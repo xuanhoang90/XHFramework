@@ -8,6 +8,9 @@
 		public function Start(){
 			global $CMS, $DB;
 			$output = "";
+			$CMS->tpl->data = array();
+			$tmp = $CMS->tpl->Display($CMS->vars['tpl_name']."/main.login", false);
+			$output = $tmp;
 			return $output;
 		}
 	}

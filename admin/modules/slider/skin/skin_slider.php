@@ -110,12 +110,12 @@ HERE;
 															$checked = "";
 														}
 														$output .=<<<HERE
-														<tr>
+														<tr class="slider-row">
 															<td>{$oneSlider['id']}</td>
 															<td><p class="pagename"><i class='fa {$oneSlider['icon']}'></i> {$oneSlider['name']}</p></td>
 															<td>
-																<a class="act edit" target="_blank" href="{$CMS->vars['root_domain']}/?site=admin&page=edit_tpl&action=editmenu&id={$oneSlider['id']}"><i class='fa fa-edit'></i> Edit</a>
-																<a class="act edit" target="_blank" href="{$CMS->vars['root_domain']}/?site=admin&page=edit_tpl&action=deletemenu&id={$oneSlider['id']}"><i class='fa fa-trash'></i> Delete</a>
+																<a class="act edit" target="_blank" href="{$CMS->vars['root_domain']}/?site=admin&page=slider&action=add&id={$oneSlider['id']}"><i class='fa fa-edit'></i> Edit</a>
+																<a class="act delete-item" target="_blank" href="{$CMS->vars['root_domain']}/?site=admin&page=slider&action=deleteslider&id={$oneSlider['id']}"><i class='fa fa-trash'></i> Delete</a>
 															</td>
 															<td>
 																<input type="checkbox" {$checked} data-toggle="toggle" data-on="<i class='fa fa-eye'></i> Enable" data-off="<i class='fa fa-eye-slash'></i> Disable">
@@ -142,7 +142,24 @@ HERE;
 												</ul>
 											</div>-->
 										</div><!-- /.box -->
-										
+										<script>
+											$(function(){
+												$(document).on("click", ".slider-row .delete-item", function(e){
+													e.preventDefault();
+													if(confirm("Are you sure?")){
+														var _Link = $(this).attr("href");
+														var _Target = $(this).parent().parent();
+														$.ajax({
+															method: "POST",
+															url: _Link,
+															data: {}
+														}).done(function( data ){
+															_Target.fadeOut().remove();
+														});
+													}
+												})
+											})
+										</script>
 									</div>
 								</div>
 							</section><!-- /.content -->
@@ -216,6 +233,13 @@ HERE;
 		}
 		public function MainSlider($id = false){
 			global $CMS, $DB;
+			$sliderName = "";
+			if(intval($CMS->input['id'])){
+				$slider_id = $CMS->input['id'];
+				$sliderName = $this->LoadSliderName($slider_id);
+			}else{
+				$slider_id = false;
+			}
 			$output = "";
 			$output =<<<HERE
 					<!-- Content Wrapper. Contains page content -->
@@ -240,7 +264,7 @@ HERE;
 											<div class="box-header with-border">
 												<h3 class="box-title">{$CMS->vars['lang']['acp_main_page_slider_editing']}</h3>
 												<div class="form-group pull-right col-md-6 col-sm-6 col-xs-12">
-													<input class="main-slider-name form-control" type="text" placeholder="Slider name" />
+													<input class="main-slider-name form-control" type="text" placeholder="Slider name" value="{$sliderName}" />
 												</div>
 											</div><!-- /.box-header -->
 											<div class="box-body box-body-slider-edit">
@@ -260,6 +284,7 @@ HERE;
 														</div>
 													</div>
 													<div class="acp-slider-slaver-tab">
+														{$this->AppendSliderData($slider_id)}
 														<!--<div class="slider-item item-slaver active" id="item-slaver-1">
 															<div class="slaver-contain">
 																<div class="sl-unit">
@@ -726,14 +751,166 @@ HERE;
 								</div>
 								<div class="row">
 									<div class="custom-slider-btn-act">
-										<a class="imp-act save"><i class="fa fa-check"></i>Save</a>
+										<a class="imp-act save" href="{$CMS->vars['root_domain']}?site=admin&page=slider&action=saveslider&id={$slider_id}"><i class="fa fa-check"></i>Save</a>
 										<a class="imp-act preview"><i class="fa fa-eye"></i>Preview</a>
-										<a class="imp-act backtohome"><i class="fa fa-arrow-circle-o-left"></i>Back to home</a>
+										<a class="imp-act backtohome" href="{$CMS->vars['root_domain']}/taka_acp"><i class="fa fa-arrow-circle-o-left"></i>Back to home</a>
 									</div>
 								</div>
 							</section><!-- /.content -->
 						</div><!-- /.content-wrapper -->
 HERE;
+			return $output;
+		}
+		public function AppendSliderData($slider_id){
+			global $CMS, $DB;
+			$output = "";
+			if($slider_id){
+				$DB->query("use ".WEBSITE_DBNAME);
+				$sql = $DB->query("SELECT * FROM slider WHERE id='{$slider_id}'");
+				if($data = $sql->fetchAll()){
+					$SliderData = unserialize($data[0]['data']);
+					//append master item
+					$i = 1;
+					foreach($SliderData as $slide){
+						//analytic main data
+						$mainData = $slide['data'];
+						$img = $mainData['bgimg'];
+						$bgsize = $mainData['bgsize'];
+						$jdata = json_encode($mainData);
+						switch($bgsize){
+							case 'default_size':
+								$CssAdd = "90% 90%";
+								break;
+							case 'fix_width':
+								$CssAdd = "100% auto";
+								break;
+							case 'fix_height':
+								$CssAdd = "auto 100%";
+								break;
+							case 'stretch':
+								$CssAdd = "100% 100%";
+								break;
+							default:
+								$CssAdd = '';
+								break;
+						}
+						$output.=<<<HERE
+						<div data='{$jdata}' class="slider-item item-slaver" id="item-slaver-{$i}" style="display: block; background-image: url({$img}); background-size: {$CssAdd};">
+							<div class="slaver-contain">
+								{$this->AppendSubElementHTML($slide['list_item'])}
+							</div>
+						</div>
+HERE;
+						$i++;
+					}
+					return $output;
+				}else{
+					return $output;
+				}
+			}else{
+				return $output;
+			}
+		}
+		public function AppendSubElementHTML($data){
+			global $CMS, $DB;
+			$output = "";
+			$i = 1;
+			foreach($data as $elem){
+				$type = $elem['type'];
+				$jdata = json_encode($elem);
+				switch($type){
+					case 'image':
+						switch($elem['img_size']){
+							case 'default_size':
+								$CssAdd = "width: auto; height: auto;";
+								break;
+							case 'fix_width':
+								$CssAdd = "width: 100%; height: auto;";
+								break;
+							case 'fix_height':
+								$CssAdd = "width: auto; height: 100%;";
+								break;
+							case 'stretch':
+								$CssAdd = "width: 100%; height: 100%;";
+								break;
+							default:
+								$CssAdd = '';
+								break;
+						}
+						$output.=<<<HERE
+						<div class="sl-unit" style="width: {$elem['width']}px; height: {$elem['height']}px; top: {$elem['top']}; left: {$elem['left']}; right: auto; bottom: auto;" data='{$jdata}'>
+							<div class="unit-act">
+								<a class="remove"><i class="fa fa-close"></i></a>
+							</div>
+							<div class="context contextimage">
+								<img src="{$elem['image']}" style="{$CssAdd}">
+							</div>
+						</div>
+HERE;
+						break;
+					case 'text':
+						switch($elem['style']){
+							case 'normal':
+								$CssAdd = "font-weight: normal; text-decoration: none; font-style: normal;";
+								break;
+							case 'bold':
+								$CssAdd = "font-weight: bold; text-decoration: none; font-style: normal;";
+								break;
+							case 'underline':
+								$CssAdd = "font-weight: normal; text-decoration: underline; font-style: normal;";
+								break;
+							case 'italic':
+								$CssAdd = "font-weight: normal; text-decoration: none; font-style: italic;";
+								break;
+							default:
+								$CssAdd = '';
+								break;
+						}
+						$output.=<<<HERE
+						<div class="sl-unit" style="width: {$elem['width']}px; height: {$elem['height']}px; top: {$elem['top']}; left: {$elem['left']}; right: auto; bottom: auto;" data='{$jdata}'>
+							<div class="unit-act">
+								<a class="remove"><i class="fa fa-close"></i></a>
+							</div>
+							<div class="context">
+								<p style="text-align: {$elem['align']}; font-size: {$elem['size']}px; color: {$elem['color']}; font-family: {$elem['font']}; line-height: {$elem['lheight']}px; {$CssAdd}">{$elem['text']}</p>
+							</div>
+						</div>
+HERE;
+						break;
+					case 'link':
+						switch($elem['style']){
+							case 'normal':
+								$CssAdd = "font-weight: normal; text-decoration: none; font-style: normal;";
+								break;
+							case 'bold':
+								$CssAdd = "font-weight: bold; text-decoration: none; font-style: normal;";
+								break;
+							case 'underline':
+								$CssAdd = "font-weight: normal; text-decoration: underline; font-style: normal;";
+								break;
+							case 'italic':
+								$CssAdd = "font-weight: normal; text-decoration: none; font-style: italic;";
+								break;
+							default:
+								$CssAdd = '';
+								break;
+						}
+						$output.=<<<HERE
+						<div class="sl-unit" style="width: {$elem['width']}px; height: {$elem['height']}px; top: {$elem['top']}; left: {$elem['left']}; right: auto; bottom: auto;" data='{$jdata}'>
+							<div class="unit-act">
+								<a class="remove"><i class="fa fa-close"></i></a>
+							</div>
+							<div class="context">
+								<a href="{$elem['url']}" style="text-align: {$elem['align']}; font-size: {$elem['size']}px; color: {$elem['color']}; font-family: {$elem['font']}; line-height: {$elem['lheight']}px; {$CssAdd}">{$elem['text']}</a>
+							</div>
+						</div>
+HERE;
+						break;
+					default:
+						break;
+				}
+				$i++;
+			}
 			return $output;
 		}
 		public function WindowSelectImageFrom(){
@@ -901,6 +1078,16 @@ HERE;
 			$sql = $DB->query("SELECT * FROM slider WHERE lang_id='1' AND 1=1 ORDER BY id DESC");
 			if($data = $sql->fetchAll()){
 				return $data;
+			}else{
+				return false;
+			}
+		}
+		public function LoadSliderName($id){
+			global $CMS, $DB;
+			$DB->query("use ".WEBSITE_DBNAME);
+			$sql = $DB->query("SELECT * FROM slider WHERE id='{$id}'");
+			if($data = $sql->fetchAll()){
+				return $data[0]['name'];
 			}else{
 				return false;
 			}

@@ -58,14 +58,30 @@ HERE;
 				$data = array(
 					"slider_name" => $slider_name,
 					"slider_id" => $slider_id,
+					"slider_data" => $this->LoadSliderData($slider_id),
 				);
+				//echo "<pre>";print_r($data['slider_data']);exit;
 				$CMS->tpl->data = $data;
-				$tmp = $CMS->tpl->Display($CMS->vars['tpl_name']."/block.menu", false);
+				$tmp = $CMS->tpl->Display($CMS->vars['tpl_name']."/block.slider", false);
 				$output = $tmp;
 			}else{
 				$output = "";
 			}
 			return $output;
+		}
+		public function LoadSliderData($id){
+			global $CMS, $DB;
+			if($id){
+				$DB->query("use ".WEBSITE_DBNAME);
+				$sql = $DB->query("SELECT * FROM slider WHERE id='{$id}'");
+				if($data = $sql->fetchAll()){
+					return unserialize($data[0]['data']);
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
 		}
 	}
 ?>

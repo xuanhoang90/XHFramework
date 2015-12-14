@@ -37,6 +37,14 @@
 				'type' => 'link',
 			)
 		),
+		array(
+			'root' => array(
+				'icon' => 'fa-home text',
+				'link' => '?site=home',
+				'lang' => 'acp_menu_item_homepage',
+				'type' => 'link',
+			)
+		),
 		//header product
 		/*
 		array(
@@ -350,6 +358,15 @@
 				'icon' => 'fa-user-secret text-green',
 				'link' => '#',
 				'lang' => 'acp_menu_header_customer',
+				'type' => 'link',
+			)
+		),
+		//customer
+		array(
+			'root' => array(
+				'icon' => 'fa-envelope-o text-green',
+				'link' => '#',
+				'lang' => 'acp_menu_header_contact',
 				'type' => 'link',
 			)
 		),

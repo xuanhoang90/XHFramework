@@ -11,10 +11,30 @@ $(function(){
 	//start, drag, stop, resize: function(){}
 	var _ResetDrag = function(){
 		$(".slaver-contain").find(".sl-unit").draggable({
-			containment: "parent"
+			containment: "parent",
+			stop: function(){
+				var _Data = JSON.parse($(".ui-draggable-dragging").attr("data"));
+				_Data.top = $(".ui-draggable-dragging").css("top");
+				_Data.left = $(".ui-draggable-dragging").css("left");
+				_Data.width = $(".ui-draggable-dragging").width();
+				_Data.height = $(".ui-draggable-dragging").height();
+				$(".ui-draggable-dragging").attr({"data": JSON.stringify(_Data)});
+			},
 		}).resizable({
 			containment: "parent",
 			handles: "all",
+			resize: function(){
+				$(".ui-resizable").removeClass("resize-this");
+				$(".ui-resizable-resizing").addClass("resize-this");
+			},
+			stop: function(){
+				var _Data = JSON.parse($(".resize-this").attr("data"));
+				_Data.top = $(".resize-this").css("top");
+				_Data.left = $(".resize-this").css("left");
+				_Data.width = $(".resize-this").width();
+				_Data.height = $(".resize-this").height();
+				$(".resize-this").attr({"data": JSON.stringify(_Data)});
+			},
 		});
 	}
 	_ResetDrag();
@@ -251,13 +271,13 @@ $(function(){
 			_globSliderSlaverTab.find(".sl-unit").removeClass("sub-e-setting");
 			_globSliderSlaverTab.find(".active").find(".slaver-contain").append('<div class="sl-unit sub-e-setting"><div class="unit-act"><a class="remove"><i class="fa fa-close"></i></a></div><div class="context contextimage"><img src="'+_Image+'" /></div></div>');
 			//add data, set default size, default offset
-			_globSliderSlaverTab.find(".sub-e-setting").css({"width": "150px", "height": "auto", "top": "0px", "left": "0px"});
+			_globSliderSlaverTab.find(".sub-e-setting").css({"width": "150px", "height": "150px", "top": "0px", "left": "0px"});
 			var _SubEdata = {
 				type: "image",
 				image: _Image,
 				img_size: "stretch",
 				width: "150px",
-				height: "auto",
+				height: "150px",
 				top: "0px",
 				left: "0px",
 			};
@@ -288,7 +308,7 @@ $(function(){
 				align: "left",
 				lheight: 25,
 				width: "200px",
-				height: "auto",
+				height: "100px",
 				top: "0px",
 				left: "0px",
 			};
@@ -322,7 +342,7 @@ $(function(){
 				align: "left",
 				lheight: 25,
 				width: "200px",
-				height: "auto",
+				height: "100px",
 				top: "0px",
 				left: "0px",
 			};
@@ -448,8 +468,8 @@ $(function(){
 					var _textAlign = _BlockSettingActive.find(".textalign").val();
 					var _Ewidth = _CurrentElementActive.width();
 					var _Eheight = _CurrentElementActive.height();
-					var _Etop = _CurrentElementActive.offset().top;
-					var _Eleft = _CurrentElementActive.offset().left;
+					var _Etop = _CurrentElementActive.css("top");
+					var _Eleft = _CurrentElementActive.css("left");
 					
 					_BlockSettingActive.find(".ele-text-link-edit").css({"text-align":_textAlign, "font-size": _textSize+"px", "color":_textColor, "font-family": _textFont});
 					
@@ -507,8 +527,8 @@ $(function(){
 					var _textAlign = _BlockSettingActive.find(".textalign").val();
 					var _Ewidth = _CurrentElementActive.width();
 					var _Eheight = _CurrentElementActive.height();
-					var _Etop = _CurrentElementActive.offset().top;
-					var _Eleft = _CurrentElementActive.offset().left;
+					var _Etop = _CurrentElementActive.css("top");
+					var _Eleft = _CurrentElementActive.css("left");
 					
 					_BlockSettingActive.find(".ele-text-link-edit").css({"text-align":_textAlign, "font-size": _textSize+"px", "color":_textColor, "font-family": _textFont});
 					
@@ -561,8 +581,8 @@ $(function(){
 					var _imgSize = _BlockSettingActive.find(".image-size").val();
 					var _Ewidth = _CurrentElementActive.width();
 					var _Eheight = _CurrentElementActive.height();
-					var _Etop = _CurrentElementActive.offset().top;
-					var _Eleft = _CurrentElementActive.offset().left;
+					var _Etop = _CurrentElementActive.css("top");
+					var _Eleft = _CurrentElementActive.css("left");
 					
 					_CurrentElementActive.find(".image-src").attr({"src":_imgSrc});
 					
@@ -644,5 +664,65 @@ $(function(){
 	//prevent click: link sub element 
 	$(document).on("click", ".acp-slider-slaver-tab a", function(e){
 		e.preventDefault();
+	})
+	//analytic sub item data 
+	var _AnalyticSliderSubItem = function(ele){
+		var _ListData = [];
+		$(ele).find(".sl-unit").each(function(){
+			if($(this).attr("data")){
+				var _data = JSON.parse($(this).attr("data"));
+			}else{
+				var _data = {};
+			}
+			_ListData.push(_data);
+		})
+		return _ListData;
+	}
+	//analytic slider data
+	var _AnalyticSliderData = function(){
+		var _SliderData = [];
+		$(".contain-slider-edit").find(".acp-slider-slaver-tab").find(".slider-item").each(function(){
+			var _containSlaver = $(this).find(".slaver-contain");
+			if($(this).attr("data")){
+				var _data = JSON.parse($(this).attr("data"));
+			}else{
+				var _data = {};
+			}
+			var _SliderItemData = {
+				data: _data,
+				list_item: _AnalyticSliderSubItem(_containSlaver),
+			};
+			_SliderData.push(_SliderItemData);
+		})
+		return _SliderData;
+	}
+	//save data
+	$(".custom-slider-btn-act").find(".imp-act").click(function(e){
+		e.preventDefault();
+		if($(this).hasClass("save")){
+			$(".custom-slider-btn-act").find(".save").html("<i class='fa fa-cog fa-spin'></i> Save");
+			var _Link = $(this).attr("href");
+			var _SliderData = _AnalyticSliderData();
+			$.ajax({
+				method: "POST",
+				url: _Link,
+				data: { sliderdata: _SliderData, slidername: $(".main-slider-name").val()}
+			}).done(function( data ) {
+				data = JSON.parse(data);
+				if(data.reload == "true"){
+					window.location.href=data.status;
+				}else{
+					$(".custom-slider-btn-act").find(".save").html("<i class='fa fa-check'></i> Save");
+				}
+			});
+		}
+		if($(this).hasClass("preview")){
+			alert("This version not support");
+		}
+		if($(this).hasClass("backtohome")){
+			if(confirm("Are your sure to leave this page!?")){
+				window.location.href=$(this).attr("href");
+			}
+		}
 	})
 })
