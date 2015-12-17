@@ -111,18 +111,54 @@ HERE;
 							$bgurl = $rowSetting['bgurl'];
 							$wfull = $rowSetting['wfull'];
 							$bgfull = $rowSetting['bgfull'];
+							$bgcolor = $rowSetting['bgcolor'];
+							$bordertype = $rowSetting['bordertype'];
+							$bordersize = $rowSetting['bordersize'];
+							$bordercolor = $rowSetting['bordercolor'];
+							$bordertop = $rowSetting['bordertop'];
+							$borderleft = $rowSetting['borderleft'];
+							$borderright = $rowSetting['borderright'];
+							$borderbottom = $rowSetting['borderbottom'];
 						}else{
 							$rowSetting = "";
 							$bgurl = "";
 							$wfull = "";
 							$bgfull = "";
+							$bgcolor = "";
+							$bordertype = "";
+							$bordersize = "";
+							$bordercolor = "";
+							$bordertop = "";
+							$borderleft = "";
+							$borderright = "";
+							$borderbottom = "";
+						}
+						if($bordertop == 'true'){
+							$CssBtop = $bordersize."px ".$bordertype." ".$bordercolor;
+						}else{
+							$CssBtop = "none";
+						}
+						if($borderleft == 'true'){
+							$CssBleft = $bordersize."px ".$bordertype." ".$bordercolor;
+						}else{
+							$CssBleft = "none";
+						}
+						if($borderright == 'true'){
+							$CssBright = $bordersize."px ".$bordertype." ".$bordercolor;
+						}else{
+							$CssBright = "none";
+						}
+						if($borderbottom == 'true'){
+							$CssBbottom = $bordersize."px ".$bordertype." ".$bordercolor;
+						}else{
+							$CssBbottom = "none";
 						}
 						if($bgfull == "true"){
-							$cssbgfull = "background-image: url({$bgurl})";
+							$cssbgfull = "background-color: {$bgcolor};background-image: url({$bgurl}); border-top: {$CssBtop}; border-left: {$CssBleft}; border-right: {$CssBright}; border-bottom: {$CssBbottom};";
 							$cssbg = "";
 						}else{
 							$cssbgfull = "";
-							$cssbg = "background-image: url({$bgurl})";
+							$cssbg = "background-color: {$bgcolor}; background-image: url({$bgurl}); border-top: {$CssBtop}; border-left: {$CssBleft}; border-right: {$CssBright}; border-bottom: {$CssBbottom};";
 						}
 						if($wfull == "true"){
 							$wfull = "x-row-wfull";
@@ -188,7 +224,7 @@ HERE;
 																	//load main frame by page nice url
 																	//$output .= $CMS->unit[$Block['data']['moduleType']]->ReloadBlock($Block['data']);
 																	//print($CMS->input['site']);exit;
-																	$output .= $CMS->frame[$CMS->input['site']]->Start();
+																	$output .= $CMS->frame[$CMS->input['site']]->Start($Block['data']);
 																}else{
 																	//unit
 																	if($Block['data']['moduleType'] != ""){

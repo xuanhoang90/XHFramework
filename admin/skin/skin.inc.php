@@ -1749,4 +1749,8 @@ HERE;
 				return false;
 			}
 		}
+		public function FrameConfig($nice_url){
+			global $CMS, $DB;
+			return $CMS->frame[$nice_url]->Setting();
+		}
 	}

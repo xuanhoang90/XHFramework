@@ -872,3 +872,53 @@
 	color: green;
 	background: #ccffff;
 }
+
+/*edit tpl: edit about us page*/
+
+.x-setting-frame .post-content{
+	background: white;
+	overflow-x: hidden;
+	border: 1px dashed #555;
+	padding: 5px;
+}
+
+.x-setting-frame .post-content p{
+	line-height: 25px;
+	margin: 2px;
+	font-size: 12px;
+	color: #555;
+	text-align: justify;
+}
+.x-setting-frame .post-content p:first-letter{
+	margin-left: 15px;
+}
+.x-setting-frame .post-content img{
+	width: 90%;
+	margin: 5px auto;
+	display: block;
+}
+.x-setting-frame .change-post-content,
+.x-setting-frame .html-content-add-image{
+	line-height: 25px;
+	float: right;
+	clear: both;
+	background: #555;
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 3px 20px;
+	border-radius: 5px;
+	-o-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	margin: 5px;
+}
+.x-setting-frame .label{
+	display: block;
+	clear: both;
+	color: #555;
+	line-height: 30px;
+	margin: 5px 0px;
+	float: left;
+	font-size: 15px;
+}

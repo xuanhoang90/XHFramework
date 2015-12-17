@@ -53,9 +53,19 @@ CSS;
 HERE;
 			return $output;
 		}
-		
+		public function GetPageInfo(){
+			global $CMS, $DB;
+			$DB->query("use ".WEBSITE_DBNAME);
+			$sql = $DB->query("SELECT value FROM config WHERE `key`='config_info' ");
+			if($data = $sql->fetchAll()){
+				return unserialize($data[0]['value']);
+			}else{
+				return;
+			}
+		}
 		public function MainContent(){
 			global $CMS, $DB;
+			$pageInfo = $this->GetPageInfo();
 			$output = "";
 			$output =<<<HERE
 					<!-- Content Wrapper. Contains page content -->
@@ -313,8 +323,13 @@ HERE;
 											<div class="box-header with-border">
 												<h3 class="box-title">{$CMS->vars['lang']['acp_main_page_webinfo']}</h3>
 											</div>
-											<div class="box-body">
-												<p>Multisite: TAKA</p>
+											<div class="box-body contain-page-info">
+												<p class="text">Page name: <span>{$pageInfo['pagename']}</span></p>
+												<p class="text">Company: <span>{$pageInfo['company']}</span></p>
+												<p class="text">Email contact: <span>{$pageInfo['email']}</span></p>
+												<p class="text">Hotline: <span>{$pageInfo['phone']}</span></p>
+												<p class="text">Blog: <span>{$pageInfo['blog']}</span></p>
+												<a class="link" href="{$CMS->vars['root_domain']}?site=admin&page=config&action=info"><i class="fa fa-edit"></i> Edit page info</a>
 											</div>
 										</div>
 									</div>

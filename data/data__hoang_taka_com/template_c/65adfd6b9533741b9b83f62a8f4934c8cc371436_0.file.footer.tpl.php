@@ -1,11 +1,11 @@
-<?php /* Smarty version 3.1.28-dev/54, created on 2015-12-15 03:13:54
+<?php /* Smarty version 3.1.28-dev/54, created on 2015-12-17 23:32:50
          compiled from "C:\xampp\htdocs\mtb\themes\tpl-01\footer.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:31639566f230271ab85_63829884%%*/
+/*%%SmartyHeaderCode:5435672e3b2b0df84_73449148%%*/
 $_valid = $_smarty_tpl->decodeProperties(array (
   'has_nocache_code' => false,
   'version' => '3.1.28-dev/54',
-  'unifunc' => 'content_566f230271ab80_90888244',
+  'unifunc' => 'content_5672e3b2b11e05_83033959',
   'file_dependency' => 
   array (
     '65adfd6b9533741b9b83f62a8f4934c8cc371436' => 
@@ -21,9 +21,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'isChild' => false,
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_566f230271ab80_90888244')) {
-function content_566f230271ab80_90888244 ($_smarty_tpl) {
-$_smarty_tpl->compiled->nocache_hash = '31639566f230271ab85_63829884';
+if ($_valid && !is_callable('content_5672e3b2b11e05_83033959')) {
+function content_5672e3b2b11e05_83033959 ($_smarty_tpl) {
+$_smarty_tpl->compiled->nocache_hash = '5435672e3b2b0df84_73449148';
 ?>
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<?php echo '<script'; ?>

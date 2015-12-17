@@ -8,3 +8,27 @@
 	width: 100%;
 	margin: 0;
 }
+.contain-page-info .text{
+	line-height: 30px;
+	font-size: 15px;
+	color: #555;
+	margin: 5px;
+	padding: 0 10px;
+}
+.contain-page-info .text span{
+	font-style: italic;
+	margin-left: 15px;
+	font-weight: bold;
+}
+.contain-page-info .link{
+	line-height: 30px;
+	font-size: 15px;
+	color: #555;
+	margin: 5px;
+	padding: 0 10px;
+	color: brown;
+	text-decoration: none;
+}
+.contain-page-info .link:hover{
+	color: red;
+}

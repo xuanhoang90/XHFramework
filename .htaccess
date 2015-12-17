@@ -24,7 +24,9 @@ RewriteRule    ^product/([A-Za-z0-9-]+)/?$    				index.php?site=product&product
 RewriteRule    ^product_category/([A-Za-z0-9-]+)/?$    		index.php?site=product_category&category=$1    			[NC,L]
 
 #Rewrite post
+RewriteRule    ^post/?$					    				index.php?site=home										[NC,L]
 RewriteRule    ^post/([A-Za-z0-9-]+)/?$    					index.php?site=post&post=$1    							[NC,L]
+RewriteRule    ^post_category/?$				    		index.php?site=post_category			    			[NC,L]
 RewriteRule    ^post_category/([A-Za-z0-9-]+)/?$    		index.php?site=post_category&category=$1    			[NC,L]
 RewriteRule    ^([A-Za-z0-9-]+)\.html/?$    				index.php?site=post&post=$1    							[NC,L]
 

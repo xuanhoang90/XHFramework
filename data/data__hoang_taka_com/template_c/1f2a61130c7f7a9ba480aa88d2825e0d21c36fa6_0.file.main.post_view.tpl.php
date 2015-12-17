@@ -1,17 +1,17 @@
-<?php /* Smarty version 3.1.28-dev/54, created on 2015-12-15 01:20:57
+<?php /* Smarty version 3.1.28-dev/54, created on 2015-12-17 23:20:56
          compiled from "C:\xampp\htdocs\mtb\themes\tpl-01\main.post_view.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:27715566f08890235a4_50670249%%*/
+/*%%SmartyHeaderCode:217975672e0e8edf370_86739352%%*/
 $_valid = $_smarty_tpl->decodeProperties(array (
   'has_nocache_code' => false,
   'version' => '3.1.28-dev/54',
-  'unifunc' => 'content_566f088903eb29_53600418',
+  'unifunc' => 'content_5672e0e8efa905_90183539',
   'file_dependency' => 
   array (
     '1f2a61130c7f7a9ba480aa88d2825e0d21c36fa6' => 
     array (
       0 => 'C:\\xampp\\htdocs\\mtb\\themes\\tpl-01\\main.post_view.tpl',
-      1 => 1443547098,
+      1 => 1450351567,
       2 => 'file',
     ),
   ),
@@ -21,11 +21,12 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'isChild' => false,
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_566f088903eb29_53600418')) {
-function content_566f088903eb29_53600418 ($_smarty_tpl) {
-$_smarty_tpl->compiled->nocache_hash = '27715566f08890235a4_50670249';
-if ($_smarty_tpl->tpl_vars['notfound']->value == "true") {?>
-	<div class="tpl-block-main-post">
+if ($_valid && !is_callable('content_5672e0e8efa905_90183539')) {
+function content_5672e0e8efa905_90183539 ($_smarty_tpl) {
+$_smarty_tpl->compiled->nocache_hash = '217975672e0e8edf370_86739352';
+?>
+<div class="tpl-block-main-post">
+	<?php if ($_smarty_tpl->tpl_vars['notfound']->value == "true") {?>
 		<div class="header">
 			<div class="notfound-title">
 				<h1>Post not found</h1>
@@ -39,9 +40,7 @@ if ($_smarty_tpl->tpl_vars['notfound']->value == "true") {?>
 		<div class="footer">
 		
 		</div>
-	</div>
-<?php } else { ?>
-	<div class="tpl-block-main-post">
+	<?php } else { ?>
 		<div class="header">
 			<div class="xcol-left">
 				<div class="thumbnail">
@@ -65,6 +64,7 @@ if ($_smarty_tpl->tpl_vars['notfound']->value == "true") {?>
 
 		</div>
 		<div class="footer">
+		<?php if ($_smarty_tpl->tpl_vars['show_soc']->value == "yes") {?>
 			<!-- Go to www.addthis.com/dashboard to customize your tools -->
 			<?php echo '<script'; ?>
  type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5580e001347ed740" async="async"><?php echo '</script'; ?>
@@ -72,9 +72,9 @@ if ($_smarty_tpl->tpl_vars['notfound']->value == "true") {?>
 
 			<!-- Go to www.addthis.com/dashboard to customize your tools -->
 			<div class="addthis_native_toolbox"></div>
+		<?php }?>
 		</div>
-	</div>
-<?php }
-}
+	<?php }?>
+</div><?php }
 }
 ?>

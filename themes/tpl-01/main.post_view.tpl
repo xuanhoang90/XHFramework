@@ -1,5 +1,5 @@
-{if $notfound == "true"}
-	<div class="tpl-block-main-post">
+<div class="tpl-block-main-post">
+	{if $notfound == "true"}
 		<div class="header">
 			<div class="notfound-title">
 				<h1>Post not found</h1>
@@ -13,9 +13,7 @@
 		<div class="footer">
 		
 		</div>
-	</div>
-{else}
-	<div class="tpl-block-main-post">
+	{else}
 		<div class="header">
 			<div class="xcol-left">
 				<div class="thumbnail">
@@ -34,11 +32,13 @@
 			{$post_detail.content}
 		</div>
 		<div class="footer">
+		{if $show_soc == "yes"}
 			<!-- Go to www.addthis.com/dashboard to customize your tools -->
 			<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5580e001347ed740" async="async"></script>
 
 			<!-- Go to www.addthis.com/dashboard to customize your tools -->
 			<div class="addthis_native_toolbox"></div>
+		{/if}
 		</div>
-	</div>
-{/if}
+	{/if}
+</div>

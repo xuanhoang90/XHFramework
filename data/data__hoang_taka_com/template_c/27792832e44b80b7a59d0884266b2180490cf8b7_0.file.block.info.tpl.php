@@ -1,11 +1,11 @@
-<?php /* Smarty version 3.1.28-dev/54, created on 2015-12-15 03:13:54
+<?php /* Smarty version 3.1.28-dev/54, created on 2015-12-17 23:32:50
          compiled from "C:\xampp\htdocs\mtb\themes\tpl-01\block.info.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:1558566f23026f3a84_38526635%%*/
+/*%%SmartyHeaderCode:287935672e3b2adb2f5_08613195%%*/
 $_valid = $_smarty_tpl->decodeProperties(array (
   'has_nocache_code' => false,
   'version' => '3.1.28-dev/54',
-  'unifunc' => 'content_566f230271ab83_14296289',
+  'unifunc' => 'content_5672e3b2aeacf3_07648344',
   'file_dependency' => 
   array (
     '27792832e44b80b7a59d0884266b2180490cf8b7' => 
@@ -21,9 +21,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'isChild' => false,
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_566f230271ab83_14296289')) {
-function content_566f230271ab83_14296289 ($_smarty_tpl) {
-$_smarty_tpl->compiled->nocache_hash = '1558566f23026f3a84_38526635';
+if ($_valid && !is_callable('content_5672e3b2aeacf3_07648344')) {
+function content_5672e3b2aeacf3_07648344 ($_smarty_tpl) {
+$_smarty_tpl->compiled->nocache_hash = '287935672e3b2adb2f5_08613195';
 ?>
 <div class="tpl-block-main-info">
 	<h2 class="title"><?php echo $_smarty_tpl->tpl_vars['pagename']->value;?>

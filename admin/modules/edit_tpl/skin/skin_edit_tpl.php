@@ -261,7 +261,7 @@ HERE;
 						{$this->WindowAddrowLayout()}
 						{$this->WindowSettingLayout()}
 						{$this->WindowBlockConfig()}
-						{$this->WindowFrameConfig()}
+						{$this->WindowFrameConfig($PageData['nice_url'])}
 						{$this->WindowMainRowChange()}
 						{$CMS->admin['skin_global']->AttachmentImage()}
 						{$CMS->admin['skin_global']->ObjectInsert()}
@@ -319,7 +319,7 @@ HERE;
 HERE;
 			return $output;
 		}
-		public function WindowFrameConfig(){
+		public function WindowFrameConfig($nice_url){
 			global $CMS, $DB;
 			$output = "";
 			$output =<<<HERE
@@ -336,24 +336,9 @@ HERE;
 								<div class="body">
 									<div class="setting-block">
 										<div class="primary row-data form-horizontal">
-											<div class="block-title row">
-												<label class="control-label col-md-3" for="block_title">Title: </label>
-												<div class="col-md-9">
-													<input type="text" class="form-control edit-block-title" name="block_title" placeholder="Title" value="" />
-												</div>
-											</div>
 											<div class="module-type row">
-												<label class="control-label col-md-3" for="block_title">Module type: </label>
-												<div class="col-md-9">
-													<select name="module-type" class="form-control edit-module-type" data="{$CMS->vars['root_domain']}">
-														<option value="default">--Select--</option>
-														{$CMS->admin['skin_global']->CustomModuleType()}
-													</select>
-												</div>
+												{$CMS->admin['skin_global']->FrameConfig($nice_url)}
 											</div>
-										</div>
-										<div class="extend-custome-module-type row-data editor" data="">
-											<p>Select module type</p>
 										</div>
 									</div>
 								</div>
@@ -455,7 +440,6 @@ HERE;
 															if($Block['required'] == "1"){
 																$required = "mainblock";
 																$title = "Required";
-																$data = "";
 															}else{
 																$required = "";
 															}

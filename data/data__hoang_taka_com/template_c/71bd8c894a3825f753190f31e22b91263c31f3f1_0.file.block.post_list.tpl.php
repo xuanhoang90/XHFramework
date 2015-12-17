@@ -1,17 +1,17 @@
-<?php /* Smarty version 3.1.28-dev/54, created on 2015-12-15 01:24:46
+<?php /* Smarty version 3.1.28-dev/54, created on 2015-12-17 23:32:50
          compiled from "C:\xampp\htdocs\mtb\themes\tpl-01\block.post_list.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:28188566f096e9dfec7_75534475%%*/
+/*%%SmartyHeaderCode:237475672e3b2a90f69_41792886%%*/
 $_valid = $_smarty_tpl->decodeProperties(array (
   'has_nocache_code' => false,
   'version' => '3.1.28-dev/54',
-  'unifunc' => 'content_566f096ea03148_60948372',
+  'unifunc' => 'content_5672e3b2aa47e5_88895411',
   'file_dependency' => 
   array (
     '71bd8c894a3825f753190f31e22b91263c31f3f1' => 
     array (
       0 => 'C:\\xampp\\htdocs\\mtb\\themes\\tpl-01\\block.post_list.tpl',
-      1 => 1449828664,
+      1 => 1450369966,
       2 => 'file',
     ),
   ),
@@ -21,9 +21,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'isChild' => false,
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_566f096ea03148_60948372')) {
-function content_566f096ea03148_60948372 ($_smarty_tpl) {
-$_smarty_tpl->compiled->nocache_hash = '28188566f096e9dfec7_75534475';
+if ($_valid && !is_callable('content_5672e3b2aa47e5_88895411')) {
+function content_5672e3b2aa47e5_88895411 ($_smarty_tpl) {
+$_smarty_tpl->compiled->nocache_hash = '237475672e3b2a90f69_41792886';
 ?>
 <div class="tpl-01-block-post-list">
 	<div class="block-header">
@@ -76,7 +76,7 @@ $_smarty_tpl->tpl_vars['post'] = $__foreach_post_0_saved_item;
 }
 ?>
 	</div>
-	<a href="<?php echo $_smarty_tpl->tpl_vars['object_link']->value;?>
+	<a class="view-all" href="<?php echo $_smarty_tpl->tpl_vars['object_link']->value;?>
 ">Xem tất cả</a>
 </div><?php }
 }

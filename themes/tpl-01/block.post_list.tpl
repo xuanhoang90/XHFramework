@@ -23,5 +23,5 @@
 		{$i = $i+1}
 		{/foreach}
 	</div>
-	<a href="{$object_link}">Xem tất cả</a>
+	<a class="view-all" href="{$object_link}">Xem tất cả</a>
 </div>

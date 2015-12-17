@@ -1,8 +1,8 @@
 $(function(){
 	function initialize() {
 	  var mapProp = {
-		center:new google.maps.LatLng(10.7665966,106.6689995),
-		zoom:17,
+		center:new google.maps.LatLng($("#googleMap").attr("data-lat"),$("#googleMap").attr("data-log")),
+		zoom:$("#googleMap").attr("data-zoom"),
 		mapTypeId:google.maps.MapTypeId.ROADMAP
 	  };
 	  var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);

@@ -28,6 +28,9 @@
 					if($CMS->input['sub_act'] == "savechange"){
 						$this->SaveTplChanged();
 					}
+					if($CMS->input['sub_act'] == "load_post_content"){
+						$this->LoadPostContent();
+					}
 					break;
 				default:
 					$this->PageDefault();
@@ -70,5 +73,16 @@
 				echo "Error";
 			}
 			return;
+		}
+		public function LoadPostContent(){
+			global $CMS, $DB;
+			$DB->query("use ".WEBSITE_DBNAME);
+			$sql = $DB->query("SELECT content FROM object_description WHERE object_id='{$CMS->input['post_id']}' AND lang_id='1' ");
+			if($data = $sql->fetchAll()){
+				echo $data[0]['content'];
+				return;
+			}else{
+				return;
+			}
 		}
 	}

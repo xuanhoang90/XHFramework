@@ -1,17 +1,17 @@
-<?php /* Smarty version 3.1.28-dev/54, created on 2015-12-15 02:30:05
+<?php /* Smarty version 3.1.28-dev/54, created on 2015-12-17 23:28:44
          compiled from "C:\xampp\htdocs\mtb\themes\tpl-01\main.contact.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:18160566f18bd2246f0_53759174%%*/
+/*%%SmartyHeaderCode:130655672e2bcebb274_66812647%%*/
 $_valid = $_smarty_tpl->decodeProperties(array (
   'has_nocache_code' => false,
   'version' => '3.1.28-dev/54',
-  'unifunc' => 'content_566f18bd22c3f1_10288962',
+  'unifunc' => 'content_5672e2bceceaf6_00965213',
   'file_dependency' => 
   array (
     '3675bbbe311925575da6fe01a538f1cfc9418958' => 
     array (
       0 => 'C:\\xampp\\htdocs\\mtb\\themes\\tpl-01\\main.contact.tpl',
-      1 => 1450117157,
+      1 => 1450347195,
       2 => 'file',
     ),
   ),
@@ -21,28 +21,46 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'isChild' => false,
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_566f18bd22c3f1_10288962')) {
-function content_566f18bd22c3f1_10288962 ($_smarty_tpl) {
-$_smarty_tpl->compiled->nocache_hash = '18160566f18bd2246f0_53759174';
-?>
-<div id="googleMap" style="width: auto;height:500px;"></div>
-<?php echo '<script'; ?>
+if ($_valid && !is_callable('content_5672e2bceceaf6_00965213')) {
+function content_5672e2bceceaf6_00965213 ($_smarty_tpl) {
+$_smarty_tpl->compiled->nocache_hash = '130655672e2bcebb274_66812647';
+if ($_smarty_tpl->tpl_vars['show_ggmap']->value == "yes") {?>
+	<div id="googleMap" style="width: auto;height:500px;"></div>
+	<?php echo '<script'; ?>
  src="http://maps.googleapis.com/maps/api/js"><?php echo '</script'; ?>
 >
-<?php if ($_smarty_tpl->tpl_vars['contact_info']->value) {?>
-	<div class="col-md-6 contact-info">
-		<h1>Contact</h1>
-		<div>
-			<p>Company: <?php echo $_smarty_tpl->tpl_vars['contact_info']->value['company'];?>
-</p>
-			<p>Email: <?php echo $_smarty_tpl->tpl_vars['contact_info']->value['email'];?>
-</p>
-			<p>Hotline: <?php echo $_smarty_tpl->tpl_vars['contact_info']->value['phone'];?>
-</p>
-		</div>
-	</div>
+	<?php echo '<script'; ?>
+>
+		function initialize(){
+		  var mapProp = {
+			center:new google.maps.LatLng(<?php echo $_smarty_tpl->tpl_vars['ggmap_lat']->value;?>
+,<?php echo $_smarty_tpl->tpl_vars['ggmap_log']->value;?>
+),
+			zoom:<?php echo $_smarty_tpl->tpl_vars['ggmap_zoom']->value;?>
+,
+			mapTypeId:google.maps.MapTypeId.ROADMAP
+		  };
+		  var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
+		}
+		google.maps.event.addDomListener(window, 'load', initialize);
+	<?php echo '</script'; ?>
+>
 <?php }?>
-	<div class="col-md-6 contact-form">
+<?php if ($_smarty_tpl->tpl_vars['show_ctform']->value == "yes") {?>
+	<div class="contact-form">
+		<?php if ($_smarty_tpl->tpl_vars['contact_info']->value) {?>
+			<div class="contact-info">
+				<h1>Contact</h1>
+				<div>
+					<p>Company: <?php echo $_smarty_tpl->tpl_vars['contact_info']->value['company'];?>
+</p>
+					<p>Email: <?php echo $_smarty_tpl->tpl_vars['contact_info']->value['email'];?>
+</p>
+					<p>Hotline: <?php echo $_smarty_tpl->tpl_vars['contact_info']->value['phone'];?>
+</p>
+				</div>
+			</div>
+		<?php }?>
 		<form>
 			<div class="row form-group">
 				<label class="control-label col-md-4" for="g_name">Your name: </label>
@@ -68,7 +86,10 @@ $_smarty_tpl->compiled->nocache_hash = '18160566f18bd2246f0_53759174';
 					<textarea name="editor" id="editor" style="width: 100%;" placeholder="Content"></textarea>
 				</div>
 			</div>
+			<input type="submit" name="submit" value="Send" />
 		</form>
-	</div><?php }
+	</div>
+<?php }
+}
 }
 ?>

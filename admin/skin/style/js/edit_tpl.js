@@ -1,4 +1,9 @@
 $(function(){
+	//prevent link click 
+	$(".contain-change-tpl").find("a").click(function(e){
+		e.preventDefault();
+	})
+
 	//global variable
 	var _globSettingLayout = $("#settinglayout");
 	var _globAddRowLayout = $("#addrowlayout");
@@ -433,7 +438,7 @@ $(function(){
 		}
 	}) */
 	_globSettingLayout.find(".x-attachment-select-one").click(function(){
-		$(".x-custom-action").addClass("target-set-row-background");
+		$("#window-attachment-quickaccess").find(".x-custom-action").addClass("target-set-row-background");
 	})
 	$(document).on("click", ".target-set-row-background", function(){
 		$(this).removeClass("target-set-row-background");
@@ -810,7 +815,7 @@ $(function(){
 	//radio button click
 	$(document).on("click", ".radio-button", function(e){
 		e.preventDefault();
-		$(this).find("input").prop("checked", true);
+		$(this).find("input").prop("checked", true).change();
 	})
 	//image-select click
 	$(document).on("click", ".image-select", function(e){
@@ -867,5 +872,19 @@ $(function(){
 		$(".menu-slider-select-this").parent().find(".menu-slider-name").html(_SliderName);
 		$(".menu-slider-select-this").parent().find(".slider_name_input").val(_SliderName);
 		$(".menu-slider-select-this").parent().find(".slider_id_input").val(_SliderID);
+	})
+	
+	//config main frame
+	$(document).on("click",".mainblock .fa-wrench", function(e){
+		e.preventDefault();
+		$("#frameconfig").fadeIn(300);
+	})
+	$(document).on("click","#frameconfig .close-this", function(e){
+		e.preventDefault();
+		$("#frameconfig").fadeOut(300);
+	})
+	$(document).on("click","#frameconfig .apply-selected", function(e){
+		e.preventDefault();
+		$("#frameconfig").fadeOut(300);
 	})
 })
