@@ -25,5 +25,5 @@
 	}else{
 		echo "System error!!!";
 	}
-	exit;
+	exit;//aaaaaaaaaaaaaaa
 ?>
